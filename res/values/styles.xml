@@ -1,0 +1,9 @@
+<resources>
+
+
+    <style name="BallonTransparent" parent="android:@Theme.Translucent">
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light" />
+</resources>

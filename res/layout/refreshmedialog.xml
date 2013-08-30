@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:text="Click to get buddies around you!"
+        android:id="@+id/aroundmenowbutton"
+        android:layout_gravity="center_horizontal|bottom|top"
+        android:background="@drawable/you" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Radius in Kilometers:"
+            android:id="@+id/textView"
+            android:typeface="normal" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiusedit"
+            android:minWidth="50dp"
+            android:numeric="decimal"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change each (Minutes):"
+            android:id="@+id/textView1"
+            android:typeface="normal" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/changeintervaledit"
+            android:minWidth="50dp"
+            android:numeric="integer"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back To Map!"
+        android:id="@+id/returntomap"
+        android:layout_gravity="center" />
+
+</LinearLayout>

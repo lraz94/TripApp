@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="app_name">TripWithMe</string>
+    <string name="title_activity_main">Trip With Me</string>
+    <string name="im">IM</string>
+    <string name="imageuser">Image Of User</string>
+    <string name="social">Social network</string>
+    <string name="avatar">avatar</string>
+    <string name="langimga">language image</string>
+    <string name="friendin">Friends in:</string>
+    <string name="done">Done</string>
+    <string name="exitbubble">Bye</string>
+    <string name="selectPopoleStr">"Select an active person"</string>
+    <string name="deletePerson">Delete</string>
+    <string name="remove">Remove</string>
+
+</resources>

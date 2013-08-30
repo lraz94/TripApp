@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User name:"
+            android:id="@+id/textView"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginusername"
+            android:minWidth="100dp"
+            android:inputType="text|textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password:"
+            android:id="@+id/textView1"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginpassword"
+            android:minWidth="100dp"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot password?"
+        android:id="@+id/forgotlogintxt"
+        android:textStyle="italic"
+        android:textColor="#9793ff"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type your email here"
+        android:id="@+id/emailforgotpass"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login now!"
+        android:id="@+id/loginnow"
+        android:layout_gravity="center" />
+
+</LinearLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.MapFragment" />
+
+
+    <ToggleButton
+        android:id="@+id/togglebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:textColor="@android:color/black"
+        android:textOff="CheckedOut"
+        android:textOn="CheckedIn"
+        android:textSize="@android:dimen/app_icon_size"
+        android:textStyle="italic"
+        android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_alignRight="@+id/map"
+            android:layout_above="@+id/linearLayout"
+            android:visibility="invisible"
+            android:indeterminate="true"
+            android:indeterminateBehavior="cycle"
+            android:background="#d3ffec"
+            android:layout_gravity="right" />
+
+        <Button
+            android:id="@+id/radar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/radar"
+            android:enabled="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp" />
+
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="Around Me!"
+            android:id="@+id/aroundyou"
+            android:background="@drawable/you"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:layout_margin="5dp" />
+
+        <Button
+            android:id="@+id/secondscreen"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/group"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Messages (0)"
+            android:id="@+id/messageButton"
+            android:layout_alignLeft="@+id/map"
+            android:layout_alignBottom="@+id/map" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Menu"
+            android:id="@+id/buttonMenu"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/map"
+            android:enabled="false" />
+    </LinearLayout>
+
+</RelativeLayout>

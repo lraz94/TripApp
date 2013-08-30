@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/updateuseritem"
+        android:title="Me"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/showallcountries"
+        android:title="Take Me To Other Land"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/aroundme"
+        android:title="Around Me"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/savedInterests"
+        android:title="My Interests"
+        android:menuCategory="container"></item>
+</menu>
