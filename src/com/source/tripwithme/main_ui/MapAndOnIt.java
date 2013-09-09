@@ -9,13 +9,13 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ToggleButton;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,6 +53,7 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
 
     private static final DecimalFormat DECIMAL_FORMAT_FIVE_POINT = new DecimalFormat("#.00000");
     private static final float ZOOM_AMOUNT_PERSON = 16;
+    private static final String MAP_TAG = "MapHandeling";
     private final ListWithListeners<PointWithID> interests;  // won't be notified on change
     private final GoogleMap map;
     private final TripWithMeMain activityWithResources;
@@ -190,14 +191,18 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
         // init map if needed and set defaults
         if (firstTime) {
             firstTime = false;
-            try {
-                MapsInitializer.initialize(activityWithResources);
-            } catch (GooglePlayServicesNotAvailableException e) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activityWithResources);
-                builder.setMessage(e.getMessage()).setTitle("You've got error with Google Maps !!!")
-                    .setCancelable(true);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            if (activityWithResources.servicesConnected()) {
+                try {
+                    MapsInitializer.initialize(activityWithResources);
+                } catch (Exception e) {
+                    firstTime = true; // can return here
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activityWithResources);
+                    builder.setMessage(e.getMessage())
+                        .setTitle("You've got error with Google Maps !!! message is: " + e.getMessage())
+                        .setCancelable(true);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
         } else {
             userMarker.remove();
@@ -249,9 +254,8 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
             .snippet(snippet)
             .icon(bitmap);
         Marker marker = map.addMarker(indicator);
-        System.out
-            .println("Added marker to map: id: " + marker.getId() + ", position: " + position + ", title: " + title +
-                     ", snippet: " + snippet);
+        Log.d(MAP_TAG, "Added marker to map: id: " + marker.getId() + ", position: " + position + ", title: " + title +
+                       ", snippet: " + snippet);
         return marker;
     }
 

@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="apk" name="TripWithMe">
+    <output-path>$PROJECT_DIR$/out/artifacts/TripWithMe</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="includeSystemProGuardCfgFile" value="true" />
+        <option name="keyAlias" value="release" />
+        <option name="keyPassword" value="c2lnbmVk" />
+        <option name="keyStorePassword" value="c2lnbmVk" />
+        <option name="keyStoreUrl" value="file://C:/app/sign.kn" />
+        <option name="proGuardCfgFileUrl" value="file://" />
+        <option name="signingMode" value="RELEASE_SIGNED" />
+      </options>
+    </properties>
+    <root id="archive" name="TripWithMe.apk">
+      <element id="android-final-package" facet="TripWithMe/android/Android" />
+    </root>
+  </artifact>
+</component>

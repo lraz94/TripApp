@@ -62,6 +62,7 @@ public class UsersManagerUI {
         setUpdateButton(context, parseUtil, me, dialog, usernameEdit, passwordEdit, emailEdit,
                         imageViews, primaryImage);
         setLoginButton(context, parseUtil, me, dialog);
+        setLoginWithFacebookButton(context, parseUtil, me, dialog);
         setImageViews(photoRequestHandler, imageViews, primaryImage);
         if (!asMust) {
             dialog.setTitle("Your Account");
@@ -69,6 +70,23 @@ public class UsersManagerUI {
             dialog.setTitle("You must Login");
         }
         dialog.show();
+    }
+
+    private static void setLoginWithFacebookButton(final Context context, final ParseUtil parseUtil,
+                                                   final PersonVisibleData me, final Dialog dialog) {
+        Button loginFacebookButton = (Button)dialog.findViewById(id.facebookloginbutton);
+        loginFacebookButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parseUtil.loginWithFacebook(me, new ActionDoneCallback() {
+                    @Override
+                    public void done() {
+                        Toast.makeText(context, "You are now logged in with Facebook!", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 
     private static void addUserInfoOnViews(PersonVisibleData me, EditText usernameEdit, EditText passwordEdit,

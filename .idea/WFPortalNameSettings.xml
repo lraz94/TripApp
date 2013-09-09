@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WFPortalNameSettings">
+    <option name="default" value="false" />
+    <option name="portalClassName" value="wf.main.portal.Portal" />
+    <option name="predefOverridesDataClassName" value="wf.bs_generated.modules.generated.OverridesMapData" />
+  </component>
+</project>
+

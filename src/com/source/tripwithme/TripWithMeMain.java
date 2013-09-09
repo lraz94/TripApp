@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +25,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.LocationCallback;
-import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
 import com.source.tripwithme.R.id;
-import com.source.tripwithme.R.layout;
 import com.source.tripwithme.R.string;
 import com.source.tripwithme.components.Country;
 import com.source.tripwithme.components.CountryFactory;
@@ -57,17 +66,19 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
-public class TripWithMeMain extends Activity implements ListenerOnCollection<PointWithID> {
+public class TripWithMeMain extends Activity implements ListenerOnCollection<PointWithID>,
+    LocationListener,
+    ConnectionCallbacks,
+    OnConnectionFailedListener {
 
     // distance consts and limits
     private static final double INITIAL_INTEREST_DISTANCE = 50;
     public static final double NEW_COUNTRY_INTEREST_DISTANCE = 80;
     private static final int INTERESTS_LIMIT = 5;
 
-    // time consts
-    private static final long FIND_LOCATION_TIMEOUT_MILLIS = 1000;    // 1 sec
+    private static final long ONE_MINUTE_MILLIS = 60000L;
 
-    private static final long DEFAULT_SLEEP_BETWEEN_UPDATES_MILLIS = 1000 * 5 * 60; // 5 min
+    private static final long DEFAULT_LOCATION_UPDATES_INTERVAL_MILLIS = 5 * ONE_MINUTE_MILLIS;
 
     // formating consts
     public static final DecimalFormat DECIMAL_FORMAT_TWO_POINTS = new DecimalFormat("#.00");
@@ -75,6 +86,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
 
     // activities returned
     private static final int RETURNED_PIC_CODE = 100;
+    public static final int REQUEST_CODE_FACEBOOK = 200;
 
     // states
     private static final String CHECKED_IN = "Checked in State";
@@ -84,6 +96,9 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     public static final int REQUEST_PHOTO_HANDLER = 150;
     public static final int SHOW_SAVE_LOCATION_ERROR_HANDLER = 250;
     public static final int ADAPTER_NEW_PERSON_HANDLER = 350;
+    private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 450;
+    private static final String LOCATION_HANDELING_TAG = "LocationHandeling";
+    private static final String UPDATE_TAG = "UpdateState";
 
     // init right away - should be final
     public static String APP_NAME;
@@ -99,12 +114,6 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private ListRemoverCallback remover;
     private PersonTapperToMapCallback tapper;
     private CountryFactory countryFactory;
-
-    // updating place by location
-    private double lastDistance;
-    private boolean stopUpdating;
-    private boolean byUserLocation;
-    private Thread threadToInterupt;
 
     // interesets
     private InterestsDatabase db;
@@ -123,12 +132,28 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private ParseGeoPoint lastInterestGeoForMsgs;
 
     // refresh location+friends
-    private long milisIntervalBetweenRefresh;
+    private long millisIntervalBetweenRefresh;
+
+    // A request to connect to Location Services
+    private LocationRequest mLocationRequest;
+
+    // Stores the current instantiation of the location client in this object
+    private LocationClient mLocationClient;
+
+    private boolean refershLocation;
+
+    private double lastDistance;
+    private boolean readyForNextLocationChange;
+    private boolean appIsOn;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.screenone);
+
+        appIsOn = false;
 
         initCoreFields();
 
@@ -136,18 +161,31 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
 
         startLocalDB();
 
+        startLocationDealing();
+
         startParse(new DetailsFoundCallback() {
             @Override
             public void details(PersonVisibleData personVisibleData) {
                 me = personVisibleData;
 
-                startLocationDealing();
-
                 startMassages();
 
                 startGUIComponents();
+
+                appIsOn = true;
+
+                updateByLocationIfCan();
             }
         });
+    }
+
+    private boolean updateByLocationIfCan() {
+        if (mLocationClient.isConnected()) {
+            Location lastKnown = mLocationClient.getLastLocation();
+            return currentLocationAsInterestPoint(lastKnown);
+        } else {
+            return false;
+        }
     }
 
     private void startMassages() {
@@ -162,7 +200,12 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         try {
             mapAndOnIt = new MapAndOnIt(mMap, this, interests, countryFactory, parseUtil, me);
         } catch (Exception e) {      // problems with play services!!!
-            showErrorInMapAndExit();
+            if (!servicesConnected()) {
+                Toast.makeText(this, "Fix Google Play Services and restart application", Toast.LENGTH_LONG).show();
+            } else {
+                Log.e(LOCATION_HANDELING_TAG, "Failure in map", e);
+                showErrorInMapAndExit();
+            }
         }
         people.addListListener(mapAndOnIt);    // map contains parralel list with it own use
         addPeopleMenuAdapter();
@@ -177,7 +220,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private void showErrorInMapAndExit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Error in Google Map or Play Services had accoured.").setTitle(
-            "You've got error with Google Maps !!!")
+            "You've got serious error with Google Maps !!!")
             .setCancelable(true).setPositiveButton("Exit now :(", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -189,12 +232,42 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     }
 
     private void startLocationDealing() {
-        /* Get Location as interest point */
-        byUserLocation = true;
-        currentLocationAsInterestPoints(INITIAL_INTEREST_DISTANCE, true);
-        stopUpdating = false;
-        startListeningToLocationChange();
+        // every time user start with its own location
+        refershLocation = true;
+        // boolean to not interupt ongoing location change
+        readyForNextLocationChange = true;
+
+        lastDistance = INITIAL_INTEREST_DISTANCE;
+
+        millisIntervalBetweenRefresh = DEFAULT_LOCATION_UPDATES_INTERVAL_MILLIS;
+
+        // Create a new global location parameters object
+        mLocationRequest = LocationRequest.create();
+        // Set the update interval
+        mLocationRequest.setInterval(millisIntervalBetweenRefresh);
+        // Use high accuracy
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        // Set the interval ceiling to one minute
+        mLocationRequest.setFastestInterval(ONE_MINUTE_MILLIS);
+
+        // Create a new location client, using the enclosing class to handle callbacks.
+        mLocationClient = new LocationClient(this, this, this);
+
+        btnAroundYou = (Button)this.findViewById(id.aroundyou);
+        btnAroundYou.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refershLocation = true;
+                boolean tryUpdate = updateByLocationIfCan();
+                if (!tryUpdate) {
+                    Toast.makeText(TripWithMeMain.this, "Can't refresh location - already in the middle!",
+                                   Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
+
 
     private void startParse(DetailsFoundCallback callback) {
         // init parse only w/o user
@@ -228,7 +301,6 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         remover = new ListRemoverCallback();
         tapper = new PersonTapperToMapCallback();
         countryFactory = CountryFactory.getLanguageFactorySigelton(this);
-        milisIntervalBetweenRefresh = DEFAULT_SLEEP_BETWEEN_UPDATES_MILLIS;
         guiHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -248,57 +320,6 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         };
     }
 
-
-    private void startListeningToLocationChange() {
-        btnAroundYou = (Button)this.findViewById(id.aroundyou);
-        btnAroundYou.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                byUserLocation = true;
-                if (threadToInterupt != null) {
-                    threadToInterupt.interrupt();
-                }
-            }
-        });
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                boolean nextTimeNoSleep = false;
-                threadToInterupt = Thread.currentThread();
-                do {
-                    if (nextTimeNoSleep) {
-                        nextTimeNoSleep = false;
-                    } else {
-                        try {
-                            Thread.sleep(milisIntervalBetweenRefresh);
-                        } catch (InterruptedException youCanAwakeMe) {
-                            System.out.println("Geo Location thread was awaken - first");
-                        }
-                    }
-                    if (byUserLocation) {
-                        publishProgress();
-                    }
-                    // we let the progress to work in case user refresh to fast
-                    // this is half of the minimal time... if interupted - next time we won't sleep
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException youCanAwakeMe) {
-                        nextTimeNoSleep = true;
-                        System.out.println("Geo Location thread was awaken - second. next time won't sleep.");
-                    }
-                } while (!stopUpdating);
-                return null;
-            }
-
-            @Override
-            protected void onProgressUpdate(Void... values) {
-                System.out.println("try to update location");
-                currentLocationAsInterestPoints(lastDistance, false);
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
     //private void addOneForEachCountryForDebug() {
     //    List<Country> countriesList = countryFactory.getAllCountries();
     //    for (Country c : countriesList) {
@@ -306,23 +327,12 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     //    }
     //}
 
-    private void currentLocationAsInterestPoints(final double distance, final boolean firstTime) {
-        ParseGeoPoint.getCurrentLocationInBackground(FIND_LOCATION_TIMEOUT_MILLIS, new LocationCallback() {
-            @Override
-            public void done(ParseGeoPoint geoPoint, ParseException e) {
-                double lat, longi;
-                if (e != null) {
-                    if (!firstTime) {
-                        Toast.makeText(TripWithMeMain.this, "updating location failed.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    lat = 31.5;
-                    longi = 34.75;
-                    // first time no place - we use arbitrary start point
-                } else {
-                    lat = geoPoint.getLatitude();
-                    longi = geoPoint.getLongitude();
-                }
+    private boolean currentLocationAsInterestPoint(Location currentLocation) {
+        if (currentLocation != null) {
+            if (readyForNextLocationChange && appIsOn) {
+                readyForNextLocationChange = false; // will be ready only after end of people fetching from DB
+                double lat = currentLocation.getLatitude();
+                double longi = currentLocation.getLongitude();
                 // show in map on ui thread
                 mapAndOnIt.showNewLocationOnMap(new LatLng(lat, longi));
                 // try using current place somehow
@@ -338,11 +348,17 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
                     protected PointWithDistance doInBackground(Void... params) {
                         Country country = countryFactory.getByNetSearchBlock(finalGeoPoint);
                         parseUtil.updateUserLocationAndMeBlock(finalGeoPoint, country, me, guiHandler);
-                        return new PointWithDistance(finalGeoPoint, distance, country.getFullName());
+                        return new PointWithDistance(finalGeoPoint, lastDistance, country.getFullName());
                     }
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                return true;
+            } else {
+                return false;
             }
-        });
+        } else {
+            Toast.makeText(this, "Can't update location - please enable in device!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     @Override
@@ -356,6 +372,26 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         if (requestCode == RETURNED_PIC_CODE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             UsersManagerUI.resultImageInUri(this, uri);
+        } else if (requestCode == REQUEST_CODE_FACEBOOK) {
+            try {
+                ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Problem with Facebook login", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == CONNECTION_FAILURE_RESOLUTION_REQUEST) {
+            switch (resultCode) {
+                // If Google Play services resolved the problem
+                case Activity.RESULT_OK:
+                    // Log the result
+                    Log.d(LOCATION_HANDELING_TAG, "Was resolved");
+                    break;
+                // If any other result was returned by Google Play services
+                default:
+                    // Log the result
+                    Log.d(LOCATION_HANDELING_TAG, "Not Resolved !!!");
+                    break;
+            }
         }
     }
 
@@ -391,6 +427,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         PointWithDistance saved = interests.get(item).getPoint();
+                        refershLocation = false;
                         iterestPointHasChanged(saved);
                     }
                 }).show();
@@ -401,7 +438,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
 
     private void showRefreshMeDialog() {
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(layout.refreshmedialog);
+        dialog.setContentView(R.layout.refreshmedialog);
         Button aroundMeButton = (Button)dialog.findViewById(id.aroundmenowbutton);
         aroundMeButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -424,14 +461,14 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             }
         });
         EditText intervalEdit = (EditText)dialog.findViewById(id.changeintervaledit);
-        intervalEdit.setText(Long.toString(milisIntervalBetweenRefresh / 60L / 1000L));
+        intervalEdit.setText(Long.toString(millisIntervalBetweenRefresh / ONE_MINUTE_MILLIS));
         intervalEdit.addTextChangedListener(new TextWatcherAfterOnly() {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    long typedToMilis = Integer.parseInt(s.toString().trim()) * 60L * 1000L;
+                    long typedToMilis = Integer.parseInt(s.toString().trim()) * ONE_MINUTE_MILLIS;
                     if (typedToMilis > 0) {  // in big numbers there can be overflaw
-                        milisIntervalBetweenRefresh = typedToMilis;
+                        millisIntervalBetweenRefresh = typedToMilis;
                     }
                 } catch (Exception ignored) {
                 }
@@ -485,7 +522,54 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
 
     // method for messagesHelper
     public PersonVisibleData getPersonFromServerBlock(String personID) {
-        return parseUtil.getPersonFromIDBlock(personID, lastInterestGeoForMsgs, remover, tapper);
+        return parseUtil.getPersonFromDBlock(personID, lastInterestGeoForMsgs, remover, tapper);
+    }
+
+
+    // location handeling
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d(LOCATION_HANDELING_TAG, "Connected to client");
+        startPeriodicUpdates();
+    }
+
+    @Override
+    public void onDisconnected() {
+        Log.d(LOCATION_HANDELING_TAG, "Disconnected from client");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d(LOCATION_HANDELING_TAG, "connection failed to client!");
+        /*
+         * Google Play services can resolve some errors it detects.
+         * If the error has a resolution, try sending an Intent to
+         * start a Google Play services activity that can resolve
+         * error.
+         */
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                /*
+                * Thrown if Google Play services canceled the original
+                * PendingIntent
+                */
+            } catch (SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            // If no resolution is available, display a dialog to the user with the error.
+            showErrorDialog(connectionResult.getErrorCode());
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (refershLocation) {  // minimal check unique for listener
+            currentLocationAsInterestPoint(location);
+        }
     }
 
 
@@ -543,6 +627,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         protected void onPostExecute(Void aVoid) {
             enableButtons();
             progressBar.setVisibility(View.INVISIBLE);
+            readyForNextLocationChange = true;
         }
     }
 
@@ -565,12 +650,15 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     @Override
     public void itemWasAdded(PointWithID point) {
         if (!suppressAddingInterests) {
-            byUserLocation = false;
+            refershLocation = false;
             iterestPointHasChanged(point.getPoint());
         }
     }
 
     private void iterestPointHasChanged(PointWithDistance point) {
+        // Disable location change - sometimes it came even before (i.e. needed to update user first)
+        // freed after server has finished
+        readyForNextLocationChange = false;
         // store the point in case we add some user from messages
         lastInterestGeoForMsgs = point.getParseGeoPosition();
         // update map
@@ -617,19 +705,56 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         if (db != null) {
             db.close();
         }
-        stopUpdating = true;
         // logout & delete user if anonymus
         parseUtil.deleteAnonymus();
     }
 
-    // put user to offline on Stop - TODO need to fill ready conditions...
+    // put user to last recorded state on start - TODO need to fill ready conditions...
+    // first time lastState == null so no fear we are updating all new one
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // State
+        if (lastState != null) {
+            boolean lastStateBool = getStateBoolAfterNullCheck();
+            if (me != null) {
+                Log.d(UPDATE_TAG, "Updating state as last remembered: " + lastStateBool);
+                parseUtil.updateOnlineStateUserAndMe(lastStateBool, me);
+            }
+        }
+
+        // Location
+        mLocationClient.connect();
+    }
+
+    // put user to offline on Stop + stop updates
     @Override
     protected void onStop() {
-        super.onStop();
+        // State
         lastState = getStateString();
         if (lastState != null) {
-            System.out.println("Updating online state to false, remembered: " + lastState);
+            Log.d(UPDATE_TAG, "Updating online state to false, remembered: " + lastState);
             parseUtil.updateOnlineStateUserAndMe(false, me);
+        }
+
+        // Location
+        stopPeriodicUpdates();
+        // After disconnect() is called, the client is considered "dead".
+        mLocationClient.disconnect();
+
+        super.onStop();
+    }
+
+    // periodic updates are started each on start and might not be used if user doesn't want them
+    private void startPeriodicUpdates() {
+        if (mLocationClient.isConnected() && servicesConnected()) {
+            mLocationClient.requestLocationUpdates(mLocationRequest, this);
+        }
+    }
+
+    private void stopPeriodicUpdates() {
+        if (mLocationClient.isConnected() && servicesConnected()) {
+            mLocationClient.removeLocationUpdates(this);
         }
     }
 
@@ -649,20 +774,50 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         return lastState.equals(CHECKED_IN);
     }
 
+    /**
+     * Verify that Google Play services is available before making a request.
+     *
+     * @return true if Google Play services is available, otherwise false
+     */
+    public boolean servicesConnected() {
 
-    // put user to last recorded state on start - TODO need to fill ready conditions...
-    // first time lastState == null so no fear we are updating all new one
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (lastState != null) {
-            boolean lastStateBool = getStateBoolAfterNullCheck();
-            if (me != null) {
-                System.out.println("Updating state as last remembered: " + lastStateBool);
-                parseUtil.updateOnlineStateUserAndMe(lastStateBool, me);
+        // Check that Google Play services is available
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        // If Google Play services is available
+        if (ConnectionResult.SUCCESS == resultCode) {
+            // In debug mode, log the status
+            Log.d(LOCATION_HANDELING_TAG, "Google play services available");
+            // Continue
+            return true;
+            // Google Play services was not available for some reason
+        } else {
+            // Display an error dialog
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, 0);
+            if (dialog != null) {
+                dialog.getWindow().setGravity(Gravity.CENTER);
+                dialog.show();
             }
+            return false;
         }
     }
+
+    /**
+     * Show a dialog returned by Google Play services for the
+     * connection error code
+     *
+     * @param errorCode An error code returned from onConnectionFailed
+     */
+    private void showErrorDialog(int errorCode) {
+        // Get the error dialog from Google Play services
+        Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(errorCode, this,
+                                                                   CONNECTION_FAILURE_RESOLUTION_REQUEST);
+        // If Google Play services can provide an error dialog
+        if (errorDialog != null) {
+            errorDialog.getWindow().setGravity(Gravity.CENTER);
+            errorDialog.show();
+        }
+    }
+
 
     private abstract static class TextWatcherAfterOnly implements TextWatcher {
 

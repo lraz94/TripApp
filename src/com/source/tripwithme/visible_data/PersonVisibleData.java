@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import com.parse.ParseGeoPoint;
+import com.source.tripwithme.R.drawable;
 import com.source.tripwithme.TripWithMeMain;
 import com.source.tripwithme.components.Country;
 import com.source.tripwithme.components.PointWithDistance;
@@ -15,9 +17,11 @@ import com.source.tripwithme.images_resolve.TrivialImageResolver;
 
 public class PersonVisibleData extends BaseVisibleData implements Comparable<PersonVisibleData> {
 
-    private final SocialNetwork[] socialNetworks;
+    private static final String UPDATE_PHOTOS_TAG = "UpdatePhotos";
     private final PersonDialogCreator personDialogCreator;
     private final PersonArrayAdapterCreator personArrayAdapterCreator;
+    private final boolean onUserFriendsList;
+    private SocialNetwork[] socialNetworks;
     private String uniqueChatID;
     private Country country;
     private String email;
@@ -27,7 +31,7 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
     public PersonVisibleData(String name, String uniqueChatID, PointWithDistance address, String status,
                              ImageResolver photo, ImageResolver[] secondaryPhotos, String email,
                              RemoverCallback remover, TappedCallback tapper, Country primaryCountry,
-                             SocialNetwork[] socialNetworks, boolean checkedIn) {
+                             SocialNetwork[] socialNetworks, boolean checkedIn, boolean onUserFriendsList) {
         super(name, address, status, photo, secondaryPhotos, remover, tapper);
         this.uniqueChatID = uniqueChatID;
         this.country = primaryCountry;
@@ -37,6 +41,7 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
         personDialogCreator = new PersonDialogCreator(this);
         personArrayAdapterCreator = new PersonArrayAdapterCreator(this);
         spannedHistory = new SpannableString("");
+        this.onUserFriendsList = onUserFriendsList;
     }
 
     public Country getCountry() {
@@ -44,6 +49,13 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
     }
 
     public SocialNetwork[] getSocialNetworks() {
+        // TODO temp
+        if (onUserFriendsList) {
+            if (socialNetworks.length < 1) {
+                socialNetworks = new SocialNetwork[1];
+            }
+            socialNetworks[0] = new SocialNetwork("facebook", drawable.facebookred);
+        }
         return socialNetworks;
     }
 
@@ -74,7 +86,7 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
 
     public void updatePhotos(Bitmap primary, Bitmap[] secondary) {
         if (primary != null) {
-            System.out.println("updating primary photo for " + name());
+            Log.d(UPDATE_PHOTOS_TAG, "updating primary photo for " + name());
             this.primaryPhoto = new TrivialImageResolver(primary);
         }
         int length;
@@ -82,7 +94,7 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
             for (int i = 0; i < length; i++) {
                 Bitmap bitmap = secondary[i];
                 if (bitmap != null) {
-                    System.out.println("updating photo ind " + i + " for " + name());
+                    Log.d(UPDATE_PHOTOS_TAG, "updating photo ind " + i + " for " + name());
                     validateSpaceAndAddPhoto(bitmap, i);
                 }
             }
@@ -159,7 +171,12 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
     }
 
     public static PersonVisibleData minimalPersonByID(String personID) {
-        return new PersonVisibleData(null, personID, null, null, null, null, null, null, null, null, null, false);
+        return new PersonVisibleData(null, personID, null, null, null, null, null, null, null, null, null, false,
+                                     false);
 
+    }
+
+    public boolean isOnUserFriendsList() {
+        return onUserFriendsList;
     }
 }

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="gen">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://C:/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/gen" />
+      <root url="file://C:/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/src" />
+    </SOURCES>
+  </library>
+</component>

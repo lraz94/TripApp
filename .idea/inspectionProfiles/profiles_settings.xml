@@ -1,0 +1,18 @@
+<component name="InspectionProjectProfileManager">
+  <settings>
+    <option name="PROJECT_PROFILE" value="Project Default" />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
+    <info color="ffff">
+      <option name="EFFECT_COLOR" value="ffff" />
+      <option name="EFFECT_TYPE" value="2" />
+      <option name="ERROR_STRIPE_COLOR" value="ffff" />
+      <option name="myName" value="SPELLING" />
+      <option name="myVal" value="51" />
+      <option name="myExternalName" value="SPELLING" />
+      <option name="myDefaultAttributes">
+        <value />
+      </option>
+    </info>
+  </settings>
+</component>

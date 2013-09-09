@@ -25,7 +25,7 @@
                 android:id="@+id/primaryphotodialog"
                 android:minHeight="100dp"
                 android:minWidth="100dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/pictures"
                 android:layout_marginRight="10dp" />
 
             <LinearLayout
@@ -69,7 +69,7 @@
                         android:layout_height="60dp"
                         android:contentDescription="@string/imageuser"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher"
+                        android:src="@drawable/pictures"
                         android:layout_marginRight="10dp" />
 
                     <ImageView
@@ -79,7 +79,7 @@
                         android:layout_marginRight="10dp"
                         android:contentDescription="@string/imageuser"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher"
+                        android:src="@drawable/pictures"
                         android:layout_gravity="center" />
 
                     <ImageView
@@ -88,7 +88,7 @@
                         android:layout_height="60dp"
                         android:contentDescription="@string/imageuser"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher"
+                        android:src="@drawable/pictures"
                         android:layout_marginRight="10dp" />
                 </LinearLayout>
             </LinearLayout>

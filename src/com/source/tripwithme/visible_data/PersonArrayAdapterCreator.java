@@ -1,5 +1,6 @@
 package com.source.tripwithme.visible_data;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,11 @@ public class PersonArrayAdapterCreator {
     public void convertView(View toConvertView) {
         setTextViews(toConvertView);
         setImageViews(toConvertView);
+        if (person.isOnUserFriendsList()) {
+            toConvertView.setBackgroundColor(Color.CYAN);
+        } else {
+            toConvertView.setBackgroundColor(Color.BLACK);
+        }
     }
 
     private void setImageViews(View convertView) {
@@ -34,7 +40,7 @@ public class PersonArrayAdapterCreator {
             (ImageView)convertView.findViewById(R.id.social2), (ImageView)convertView.findViewById(R.id.social3)};
         // social net will be set in fillImagesViewsWithData
         person.resolvePrimaryPhoto(new ProgressCallbackCreator(new DummyProgressCallback(), 1),
-                                   new BitmapsToViews(photoImage, drawable.ic_launcher));
+                                   new BitmapsToViews(photoImage, drawable.pictures));
         Country primary = person.getCountry();
         if (primary != null) {
             primCountryIco.setImageResource(primary.resource());
@@ -42,8 +48,8 @@ public class PersonArrayAdapterCreator {
             primCountryIco.setImageResource(R.drawable.un);
         }
         SocialNetwork[] socialNets = person.getSocialNetworks();
-        DataInsertToImageViews
-            .fillImagesViewsWithData(socialNetsImgs, socialNets, DataInsertToImageViews.NO_RESOUCE_IDENTIFIER);
+        DataInsertToImageViews.fillImagesViewsWithData(socialNetsImgs, socialNets,
+                                                       DataInsertToImageViews.NO_RESOUCE_IDENTIFIER);
 
     }
 

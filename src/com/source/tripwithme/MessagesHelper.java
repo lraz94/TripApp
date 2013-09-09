@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class MessagesHelper {
 
     private static final int ADD_PERSON_TO_LIST_HANDLER = 550;
     private static final int REFRESH_BUTTON_AND_HISTORY_HANDLER = 660;
+    private static final String MESSAGES_TAG = "MessagesHandling";
 
     private final TripWithMeMain caller;
 
@@ -71,7 +73,7 @@ public class MessagesHelper {
                             List<String> pendingMessages =
                                 OfflineMessagesUtil.getPendingMessagesBlock(uniqueID);
                             if (!pendingMessages.isEmpty()) {
-                                System.out.println("### new messages: " + pendingMessages);
+                                Log.d(MESSAGES_TAG, "new messages: " + pendingMessages);
                                 addAllNewMessagesBlock(pendingMessages);
                             }
                         }
@@ -197,7 +199,7 @@ public class MessagesHelper {
     }
 
     private void handlerAddPersonToList(PersonVisibleData person) {
-        System.out.println("MESSAGES - new person is added to list");
+        Log.d(MESSAGES_TAG, "MESSAGES - new person is added to list");
         Message guiMessage = new Message();
         guiMessage.what = ADD_PERSON_TO_LIST_HANDLER;
         guiMessage.obj = person;

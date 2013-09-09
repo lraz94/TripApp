@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseGeoPoint;
 import com.source.tripwithme.components.ListWithListeners;
@@ -20,6 +21,8 @@ public class InterestsDatabase implements ListenerOnCollection<PointWithID> {
     private static final String DISTANCE_FIELD = "distance";
     private static final String TABLE_NAME = "interests";
     private static final String ID_FIELD = "id";
+
+    private static final String INTERESET_TAG = "InterestsHandling";
 
     private static InterestsDatabase instance = null;
     private SQLiteDatabase db;
@@ -94,7 +97,7 @@ public class InterestsDatabase implements ListenerOnCollection<PointWithID> {
                     }
                     values.put(DISTANCE_FIELD, point.getDistance());
                     if (db.insert(TABLE_NAME, null, values) != -1) {
-                        System.out.println("inserted point added " + object);
+                        Log.d(INTERESET_TAG, "inserted point added " + object);
                     }
                 }
             }).start();
@@ -111,7 +114,7 @@ public class InterestsDatabase implements ListenerOnCollection<PointWithID> {
             @Override
             public void run() {
                 int count = db.delete(TABLE_NAME, ID_FIELD + " = " + obj.getId(), null);
-                System.out.println("Deleted point: " + obj + " count: " + count);
+                Log.d(INTERESET_TAG, "Deleted point: " + obj + " count: " + count);
             }
         }).start();
     }

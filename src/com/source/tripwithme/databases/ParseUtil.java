@@ -7,13 +7,21 @@ import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
+import com.facebook.Request;
+import com.facebook.Request.GraphUserCallback;
+import com.facebook.Request.GraphUserListCallback;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseAnalytics;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -35,7 +43,9 @@ import com.source.tripwithme.visible_data.TappedCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.TreeSet;
 
 
 public class ParseUtil {
@@ -46,14 +56,19 @@ public class ParseUtil {
     private static final String ONLINE_STATE_KEY = "OnlineState";
     private static final String PRIMARY_IMAGE_KEY = "PrimaryImage";
     private static final String USER_IMAGE_PREFIX = "userImage";
+    private static final String IS_IN_FACEBOOK_KEY = "InFacebook";
     public static final int NUMBER_OF_SECONDARY_PHOTOS = 3;
     private static final boolean INITIAL_ANONYMUS_CHECKED_STATE = false;
     private static final int SLEEP_BETWEEN_FINDINGS_EFFECT = 100;
+    private static final String FACEBOOK_TAG = "FacebookTag";
+
+    private static final String PARSE_SAVE_TAG = "ParseSave";
 
     public static ParseUtil instance = null;
     private final Activity activity;
     private final CountryFactory countryFactory;
     private ParseUser currentUser;
+    private TreeSet<String> friends;
 
     public static ParseUtil instance(Activity activity, CountryFactory countryFactory) {
         if (instance == null) {
@@ -65,6 +80,7 @@ public class ParseUtil {
     private ParseUtil(Activity activity, CountryFactory countryFactory) {
         this.activity = activity;
         this.countryFactory = countryFactory;
+        this.friends = new TreeSet<String>();
         init();
     }
 
@@ -81,6 +97,9 @@ public class ParseUtil {
         ParseACL.setDefaultACL(defaultACL, true);
 
         ParseAnalytics.trackAppOpened(activity.getIntent());
+
+        ParseFacebookUtils.initialize("211814822312783");   // TODO put app id
+
     }
 
     public void showErrorInAccountDialog(ParseException e, boolean fatal) {
@@ -136,47 +155,116 @@ public class ParseUtil {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
-                if (e != null) {
-                    e.printStackTrace();
-                    showErrorInAccountDialog(e, false);
-                } else {
-                    currentUser = parseUser;
-
-                    // update online state + location according to current state in app
-                    if (me != null) {
-                        setLocationNoSave(me);
-                        setStateNoSave(me);
-                        System.out.println("parse Saving in background at login in");
-                        currentUser.saveInBackground();
-                    }
-
-                    // update self
-                    String email = currentUser.getEmail();
-                    ImageResolver primary =
-                        new ParseFileResolver(currentUser.getParseFile(PRIMARY_IMAGE_KEY), ParseUtil.this);
-                    ImageResolver[] secondary = createPhotosResolvers(currentUser);
-                    if (me != null) {
-                        me.changeLoginDetails(username, currentUser.getObjectId(), primary, secondary, email);
-                    }
-
-                    callback.done();
-
-
-                }
+                loginParseDone(parseUser, e, me, username, callback);
+                // after callback...
             }
         });
+    }
+
+    private boolean loginParseDone(ParseUser parseUser, ParseException e, PersonVisibleData me, String username,
+                                   ActionDoneCallback callback) {
+        if (e != null) {
+            e.printStackTrace();
+            showErrorInAccountDialog(e, false);
+            return false;
+        } else {
+            currentUser = parseUser;
+
+            // update online state + location according to current state in app
+            if (me != null) {
+                setLocationNoSave(me);
+                setStateNoSave(me);
+                Log.d(PARSE_SAVE_TAG, "parse Saving in background at login in");
+                currentUser.saveInBackground();
+            }
+
+            // update self
+            String email = currentUser.getEmail();
+            ImageResolver primary =
+                new ParseFileResolver(currentUser.getParseFile(PRIMARY_IMAGE_KEY), this);
+            ImageResolver[] secondary = createPhotosResolvers(currentUser);
+            if (me != null) {
+                me.changeLoginDetails(username, currentUser.getObjectId(), primary, secondary, email);
+            }
+
+            callback.done();
+            return true;
+        }
+    }
+
+    public String[] getPermissions() {
+        return new String[]{
+            "user_about_me",
+            // "offline_access",
+            "friends_about_me",
+            "user_photos",
+            "friends_photos",
+            "read_stream",
+            "friends_status",
+        };
+    }
+
+    public void loginWithFacebook(final PersonVisibleData me, final ActionDoneCallback callback) {
+        try {
+            ParseFacebookUtils.logIn(Arrays.asList(getPermissions()),
+                                     activity, TripWithMeMain.REQUEST_CODE_FACEBOOK, new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException err) {
+                    if (user == null) {
+                        Log.d(FACEBOOK_TAG, "Uh oh. The user cancelled the Facebook login.");
+                        Toast.makeText(activity, "You have cancelled the Facebook login", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (user.isNew()) {
+                            Log.d(FACEBOOK_TAG, "User signed up and logged in through Facebook!");
+                        } else {
+                            Log.d(FACEBOOK_TAG, "User logged in through Facebook!");
+                        }
+                        boolean loginResult = loginParseDone(user, err, me, "facebook user", callback); // temp username
+                        if (loginResult) {
+                            user.put(IS_IN_FACEBOOK_KEY, true);
+                            fixCredentialsSave(user, me);
+                        }
+                    }
+                }
+
+                private void fixCredentialsSave(final ParseUser parseUser, final PersonVisibleData me) {
+                    Session session = ParseFacebookUtils.getSession();
+                    Request request = Request.newMeRequest(session, new GraphUserCallback() {
+                        @Override
+                        public void onCompleted(GraphUser graphUser, Response response) {
+                            if (response.getError() == null) {
+                                String username = getUsernameFromGraphUser(graphUser);
+                                String email = username + "@facebookHiddenEmail.com";
+                                parseUser.setUsername(username);
+                                parseUser.setEmail(email);
+                                me.setUserNameAndEmail(username, email);
+                                Log.d(PARSE_SAVE_TAG, "parse Saving in background at facebook login in");
+                                parseUser.saveInBackground();
+                            } else {
+                                Log.e("TripWithMeMain", "Error returned by facebook while quering me: " +
+                                                        response.getError().getUserActionMessageId());
+                            }
+                        }
+                    });
+                    request.executeAsync();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(activity, "Problem with Facebook login", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setLocationNoSave(PersonVisibleData me) {
         if (me != null) {
             PointWithDistance address = me.address();
             if (address != null) {
-                System.out.println("parse setting address no save " + address);
+                Log.d(PARSE_SAVE_TAG, "parse setting address no save " + address);
                 currentUser.put(PARSE_GEOPOINT_KEY, address.getParseGeoPosition());
             }
             Country country = me.getCountry();
             if (country != null) {
-                System.out.println("parse setting country no save " + country);
+                Log.d(PARSE_SAVE_TAG, "parse setting country no save " + country);
                 currentUser.put(COUNTRY_ISO_KEY, country.name());
             }
         }
@@ -187,7 +275,7 @@ public class ParseUtil {
         if (me != null) {
             boolean checkedin = me.isCheckedIn();
             currentUser.put(ONLINE_STATE_KEY, checkedin);
-            System.out.println("parse setting state to " + checkedin + " no save");
+            Log.d(PARSE_SAVE_TAG, "parse setting state to " + checkedin + " no save");
         }
     }
 
@@ -205,6 +293,7 @@ public class ParseUtil {
     public void startGettingPeopleBlock(ParseGeoPoint parseGeoPositionCurrent, double interestRadios,
                                         OneFoundCallback<PersonVisibleData> oneFoundCallback,
                                         RemoverCallback remover, TappedCallback tapper) {
+        updateFriendsList();
         String thisUserObjectId = currentUser.getObjectId();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereWithinKilometers(PARSE_GEOPOINT_KEY, parseGeoPositionCurrent, interestRadios);
@@ -257,7 +346,20 @@ public class ParseUtil {
         ImageResolver[] resolvers = createPhotosResolvers(user);
         return new PersonVisibleData(name, user.getObjectId(), new PointWithDistance(position, distFromMe), stateStr,
                                      primaryImage, resolvers, email, remover, tapper, country,
-                                     new SocialNetwork[]{AllSocialNetworks.getSocialNetwork(null)}, personOnline);
+                                     getSocialNetworks(user), personOnline,
+                                     findIfOnFriendsList(name));
+    }
+
+    private SocialNetwork[] getSocialNetworks(ParseUser user) {
+        if (user.getBoolean(IS_IN_FACEBOOK_KEY)) {
+            return new SocialNetwork[]{AllSocialNetworks.facebook()};
+        } else {
+            return new SocialNetwork[]{};
+        }
+    }
+
+    private boolean findIfOnFriendsList(String name) {
+        return friends.contains(name);
     }
 
 
@@ -277,11 +379,11 @@ public class ParseUtil {
         // after me is updated update user
         setLocationNoSave(me);
         try {
-            System.out.println("parser save user in block in updateUserLocationAndMeBlock");
+            Log.d(PARSE_SAVE_TAG, "parser save user in block in updateUserLocationAndMeBlock");
             currentUser.save();
         } catch (Exception e) {
             guiHandler.sendEmptyMessage(TripWithMeMain.SHOW_SAVE_LOCATION_ERROR_HANDLER);
-            System.out.println("Error in parse save in location request");
+            Log.d(PARSE_SAVE_TAG, "Error in parse save in location request");
             e.printStackTrace();
 
         }
@@ -294,7 +396,7 @@ public class ParseUtil {
         // me is updated - send it to server
         setStateNoSave(me);
         currentUser.saveInBackground();
-        System.out.println("parse save after set in updateOnlineStateUserAndMe, new state: " + online);
+        Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
     }
 
     public boolean isSignedUp() {
@@ -351,7 +453,7 @@ public class ParseUtil {
                             }
                         }
                     }
-                    System.out.println("Update photos done with user.");
+                    Log.d(PARSE_SAVE_TAG, "Update photos done with user.");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -371,7 +473,7 @@ public class ParseUtil {
         imageFile.save();
         currentUser.put(fieldKey, imageFile);
         currentUser.save();
-        System.out.println("Finished saving pic to parse with Name: " + fileName + ", Key: " + fieldKey);
+        Log.d(PARSE_SAVE_TAG, "Finished saving pic to parse with Name: " + fileName + ", Key: " + fieldKey);
     }
 
 
@@ -415,21 +517,21 @@ public class ParseUtil {
                         new ParseFileResolver(currentUser.getParseFile(PRIMARY_IMAGE_KEY), ParseUtil.this);
                     ImageResolver[] resolvers = createPhotosResolvers(currentUser);
                     return new PersonVisibleData(name, currentUser.getObjectId(), null, null, primaryImage, resolvers,
-                                                 email, null, null, null, null, isOnline);
+                                                 email, null, null, null, null, isOnline, false);
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            callback.details(
-                new PersonVisibleData("Anonymus" + System.currentTimeMillis(), currentUser.getObjectId(), null, null,
-                                      new ParseFileResolver(null, this),
-                                      new ParseFileResolver[]{new ParseFileResolver(null, this),
-                                          new ParseFileResolver(null, this), new ParseFileResolver(null, this)},
-                                      null, null, null, null, null, INITIAL_ANONYMUS_CHECKED_STATE));
+            callback.details(new PersonVisibleData("Anonymus" + System.currentTimeMillis(), currentUser.getObjectId(),
+                                                   null, null, new ParseFileResolver(null, this),
+                                                   new ParseFileResolver[]{new ParseFileResolver(null, this),
+                                                       new ParseFileResolver(null, this),
+                                                       new ParseFileResolver(null, this)}, null, null, null, null, null,
+                                                   INITIAL_ANONYMUS_CHECKED_STATE, false));
         }
     }
 
-    public PersonVisibleData getPersonFromIDBlock(String personID, ParseGeoPoint parseGeoPositionCurrent,
-                                                  RemoverCallback remover, TappedCallback tapper) {
+    public PersonVisibleData getPersonFromDBlock(String personID, ParseGeoPoint parseGeoPositionCurrent,
+                                                 RemoverCallback remover, TappedCallback tapper) {
         try {
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             ParseUser user = query.get(personID);
@@ -447,24 +549,64 @@ public class ParseUtil {
         void details(PersonVisibleData personVisibleData);
     }
 
+    // out of the UI thread
+    private void updateFriendsList() {
+        friends = new TreeSet<String>();
+        try {
+            if (ParseFacebookUtils.isLinked(currentUser)) {
+                Session session = ParseFacebookUtils.getSession();
+                Request request = Request.newMyFriendsRequest(session, new GraphUserListCallback() {
+                    @Override
+                    public void onCompleted(List<GraphUser> users, Response response) {
+                        try {
+                            if (response.getError() == null) {
+                                for (GraphUser user : users) {
+                                    friends.add(getUsernameFromGraphUser(user));
+                                }
+                                // TODO temp print
+                                Log.d(FACEBOOK_TAG, "Friends list fetched: " + friends);
+                            } else {
+                                Log.e(FACEBOOK_TAG, "Error returned by facebook while update friends list: " +
+                                                    response.getError().getUserActionMessageId());
+                            }
+                        } catch (Exception e) {
+                            Log.e(FACEBOOK_TAG, "Exception thrown in update friends list with facebook", e);
+                        }
+                    }
+                });
+                request.executeAndWait();
+            }
+        } catch (Exception e) {
+            Log.e(FACEBOOK_TAG, "Exception thrown in update friends list with facebook", e);
+        }
+    }
 
-    //// TODO remove after finished adding to map
-    //public void addNewUser(Country country) {
-    //    System.out.println("Adding user in: " + country);
-    //    String countryIsoName = country.name();
-    //    String countryFullName = country.getFullName();
-    //    ParseUser user = new ParseUser();
-    //    user.setUsername(countryFullName + " person");
-    //    user.setPassword(countryIsoName);
-    //    user.setEmail(countryIsoName + "@source.com");
-    //    user.put(PARSE_GEOPOINT_KEY, country.getGeoPoint());
-    //    user.put(COUNTRY_ISO_KEY, countryIsoName);
-    //    user.put(ONLINE_STATE_KEY, true);
-    //    try {
-    //        user.signUp();
-    //        ParseUser.logOut();
-    //    } catch (ParseException e) {
-    //    }
-    //}
+    private String getUsernameFromGraphUser(GraphUser user) {
+        String username = user.getUsername();
+        if (username == null) {
+            username = user.getName();
+        }
+        return username;
+    }
 
+    /*
+    // remove after finished adding to map
+    public void addNewUser(Country country) {
+        System.out.println("Adding user in: " + country);
+        String countryIsoName = country.name();
+        String countryFullName = country.getFullName();
+        ParseUser user = new ParseUser();
+        user.setUsername(countryFullName + " person");
+        user.setPassword(countryIsoName);
+        user.setEmail(countryIsoName + "@source.com");
+        user.put(PARSE_GEOPOINT_KEY, country.getGeoPoint());
+        user.put(COUNTRY_ISO_KEY, countryIsoName);
+        user.put(ONLINE_STATE_KEY, true);
+        try {
+            user.signUp();
+            ParseUser.logOut();
+        } catch (ParseException e) {
+        }
+    }
+    */
 }
