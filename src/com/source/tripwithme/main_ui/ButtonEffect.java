@@ -1,8 +1,9 @@
-package com.source.tripwithme;
+package com.source.tripwithme.main_ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Button;
 
 public class ButtonEffect {
@@ -34,7 +35,7 @@ public class ButtonEffect {
                         Thread.sleep(SLEEP_BETWEEN_MILLIS);
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.e("ButtonEffect", "interuped", e);
                 }
                 return null;
             }

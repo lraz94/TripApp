@@ -15,6 +15,7 @@ import com.facebook.Request.GraphUserListCallback;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
+import com.parse.DeleteCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -27,6 +28,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.source.tripwithme.TripWithMeMain;
 import com.source.tripwithme.components.AllSocialNetworks;
@@ -60,7 +62,7 @@ public class ParseUtil {
     public static final int NUMBER_OF_SECONDARY_PHOTOS = 3;
     private static final boolean INITIAL_ANONYMUS_CHECKED_STATE = false;
     private static final int SLEEP_BETWEEN_FINDINGS_EFFECT = 100;
-    private static final String FACEBOOK_TAG = "FacebookTag";
+    public static final String FACEBOOK_TAG = "FacebookTag";
 
     private static final String PARSE_SAVE_TAG = "ParseSave";
 
@@ -69,6 +71,7 @@ public class ParseUtil {
     private final CountryFactory countryFactory;
     private ParseUser currentUser;
     private TreeSet<String> friends;
+    private int requestNumber;
 
     public static ParseUtil instance(Activity activity, CountryFactory countryFactory) {
         if (instance == null) {
@@ -81,9 +84,14 @@ public class ParseUtil {
         this.activity = activity;
         this.countryFactory = countryFactory;
         this.friends = new TreeSet<String>();
+        requestNumber = 0;
         init();
     }
 
+    // Used to know if person is from old search and should be ignored
+    public int getRequestNumber() {
+        return requestNumber;
+    }
 
     private void init() {
         // initialization
@@ -91,15 +99,19 @@ public class ParseUtil {
                          "VEWI0oOYeNrG9QNRJOmhm9IUxuTLkUVIOHpXStlb");
 
         // ACL
-        ParseACL defaultACL = new ParseACL();
-        // all objects are public read
-        defaultACL.setPublicReadAccess(true);
-        ParseACL.setDefaultACL(defaultACL, true);
+        ParseACL.setDefaultACL(getPublicReadOnlyACL(), true);
 
         ParseAnalytics.trackAppOpened(activity.getIntent());
 
         ParseFacebookUtils.initialize("211814822312783");   // TODO put app id
 
+    }
+
+    private ParseACL getPublicReadOnlyACL() {
+        ParseACL readOnlyACL = new ParseACL();
+        readOnlyACL.setPublicReadAccess(true);
+        readOnlyACL.setPublicWriteAccess(false);
+        return readOnlyACL;
     }
 
     public void showErrorInAccountDialog(ParseException e, boolean fatal) {
@@ -141,41 +153,75 @@ public class ParseUtil {
                         callback.done();
                         me.setUniqueChatID(currentUser.getObjectId());
                     } else {
-                        e.printStackTrace();
+                        Log.e(PARSE_SAVE_TAG, "Sign up failed", e);
                         showErrorInAccountDialog(e, false);
+                        // partial login is not good - we 'reset' by giving new user!
+                        currentUser.deleteInBackground(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(PARSE_SAVE_TAG, "Error delete anonymus user", e);
+                                }
+                            }
+                        });
+                        ParseUser.logOut();
+                        loginAnonymus();
                     }
-
                 }
             });
         }
     }
 
+
     public void loginAndUpdateMe(final String username, String password, final PersonVisibleData me,
                                  final ActionDoneCallback callback) {
+        final boolean isAnonymus = deleteAnonymusAndLogOut();
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
-                loginParseDone(parseUser, e, me, username, callback);
-                // after callback...
+                boolean result = loginParseDone(parseUser, e, me, username, callback);
+                if (!result && isAnonymus) {
+                    loginAnonymus();
+                }
             }
         });
+    }
+
+    private void loginAnonymus() {
+        ParseAnonymousUtils.logIn(new LogInCallback() {
+            @Override
+            public void done(final ParseUser parseUser, ParseException e) {
+                if (e == null) {
+                    currentUser = parseUser;
+                    Toast.makeText(activity, "New anonymus identity was given to you", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(PARSE_SAVE_TAG, "can't login anonymus in resotre", e);
+                }
+            }
+        });
+
     }
 
     private boolean loginParseDone(ParseUser parseUser, ParseException e, PersonVisibleData me, String username,
                                    ActionDoneCallback callback) {
         if (e != null) {
-            e.printStackTrace();
+            Log.e(PARSE_SAVE_TAG, "login parse failure", e);
             showErrorInAccountDialog(e, false);
             return false;
         } else {
             currentUser = parseUser;
-
             // update online state + location according to current state in app
             if (me != null) {
                 setLocationNoSave(me);
                 setStateNoSave(me);
                 Log.d(PARSE_SAVE_TAG, "parse Saving in background at login in");
-                currentUser.saveInBackground();
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Log.e(PARSE_SAVE_TAG, "Error while save in login done update", e);
+
+                    }
+                });
             }
 
             // update self
@@ -212,17 +258,24 @@ public class ParseUtil {
                 public void done(ParseUser user, ParseException err) {
                     if (user == null) {
                         Log.d(FACEBOOK_TAG, "Uh oh. The user cancelled the Facebook login.");
-                        Toast.makeText(activity, "You have cancelled the Facebook login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity,
+                                       "Facebook app isn't installed, or youv'e canceled Login. Fix and Retry.",
+                                       Toast.LENGTH_SHORT).show();
                     } else {
                         if (user.isNew()) {
                             Log.d(FACEBOOK_TAG, "User signed up and logged in through Facebook!");
                         } else {
                             Log.d(FACEBOOK_TAG, "User logged in through Facebook!");
                         }
+                        boolean isAnonymus = deleteAnonymusAndLogOut();
                         boolean loginResult = loginParseDone(user, err, me, "facebook user", callback); // temp username
                         if (loginResult) {
                             user.put(IS_IN_FACEBOOK_KEY, true);
                             fixCredentialsSave(user, me);
+                        } else {
+                            if (isAnonymus) {
+                                loginAnonymus();
+                            }
                         }
                     }
                 }
@@ -239,7 +292,12 @@ public class ParseUtil {
                                 parseUser.setEmail(email);
                                 me.setUserNameAndEmail(username, email);
                                 Log.d(PARSE_SAVE_TAG, "parse Saving in background at facebook login in");
-                                parseUser.saveInBackground();
+                                parseUser.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Log.e(PARSE_SAVE_TAG, "Error while save facebook log in", e);
+                                    }
+                                });
                             } else {
                                 Log.e("TripWithMeMain", "Error returned by facebook while quering me: " +
                                                         response.getError().getUserActionMessageId());
@@ -250,10 +308,11 @@ public class ParseUtil {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(PARSE_SAVE_TAG, "login with facebook failure", e);
             Toast.makeText(activity, "Problem with Facebook login", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void setLocationNoSave(PersonVisibleData me) {
         if (me != null) {
@@ -293,6 +352,7 @@ public class ParseUtil {
     public void startGettingPeopleBlock(ParseGeoPoint parseGeoPositionCurrent, double interestRadios,
                                         OneFoundCallback<PersonVisibleData> oneFoundCallback,
                                         RemoverCallback remover, TappedCallback tapper) {
+        requestNumber++;
         updateFriendsList();
         String thisUserObjectId = currentUser.getObjectId();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -311,9 +371,9 @@ public class ParseUtil {
                 Thread.sleep(SLEEP_BETWEEN_FINDINGS_EFFECT);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e(PARSE_SAVE_TAG, "start get person from db parse exception", e);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.e(PARSE_SAVE_TAG, "start get person from db parse exception", e);
 
         }
     }
@@ -347,7 +407,7 @@ public class ParseUtil {
         return new PersonVisibleData(name, user.getObjectId(), new PointWithDistance(position, distFromMe), stateStr,
                                      primaryImage, resolvers, email, remover, tapper, country,
                                      getSocialNetworks(user), personOnline,
-                                     findIfOnFriendsList(name));
+                                     findIfOnFriendsList(name), requestNumber);
     }
 
     private SocialNetwork[] getSocialNetworks(ParseUser user) {
@@ -383,9 +443,7 @@ public class ParseUtil {
             currentUser.save();
         } catch (Exception e) {
             guiHandler.sendEmptyMessage(TripWithMeMain.SHOW_SAVE_LOCATION_ERROR_HANDLER);
-            Log.d(PARSE_SAVE_TAG, "Error in parse save in location request");
-            e.printStackTrace();
-
+            Log.e(PARSE_SAVE_TAG, "Error in parse save in location request", e);
         }
     }
 
@@ -395,7 +453,13 @@ public class ParseUtil {
         }
         // me is updated - send it to server
         setStateNoSave(me);
-        currentUser.saveInBackground();
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.e(PARSE_SAVE_TAG, "Error while save update online state", e);
+
+            }
+        });
         Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
     }
 
@@ -414,20 +478,13 @@ public class ParseUtil {
                             .show();
                         callback.done();
                     } else {
-                        e.printStackTrace();
+                        Log.e(PARSE_SAVE_TAG, "request password reset", e);
                         showErrorInAccountDialog(e, false);
                     }
                 }
             }
         );
 
-    }
-
-    public void deleteAnonymus() {
-        if (!isSignedUp()) {
-            currentUser.deleteEventually();
-            ParseUser.logOut();
-        }
     }
 
 
@@ -455,9 +512,9 @@ public class ParseUtil {
                     }
                     Log.d(PARSE_SAVE_TAG, "Update photos done with user.");
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    Log.e(PARSE_SAVE_TAG, "update pics", e);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(PARSE_SAVE_TAG, "update pics", e);
                 }
             }
         }).start();
@@ -487,6 +544,7 @@ public class ParseUtil {
                 @Override
                 public void done(ParseUser user, ParseException e) {
                     if (e != null) {
+                        Log.e(PARSE_SAVE_TAG, "get initial details", e);
                         showErrorInAccountDialog(e, true);
                     } else {
                         currentUser = user;
@@ -517,7 +575,7 @@ public class ParseUtil {
                         new ParseFileResolver(currentUser.getParseFile(PRIMARY_IMAGE_KEY), ParseUtil.this);
                     ImageResolver[] resolvers = createPhotosResolvers(currentUser);
                     return new PersonVisibleData(name, currentUser.getObjectId(), null, null, primaryImage, resolvers,
-                                                 email, null, null, null, null, isOnline, false);
+                                                 email, null, null, null, null, isOnline, false, 0);
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
@@ -526,7 +584,7 @@ public class ParseUtil {
                                                    new ParseFileResolver[]{new ParseFileResolver(null, this),
                                                        new ParseFileResolver(null, this),
                                                        new ParseFileResolver(null, this)}, null, null, null, null, null,
-                                                   INITIAL_ANONYMUS_CHECKED_STATE, false));
+                                                   INITIAL_ANONYMUS_CHECKED_STATE, false, 0));
         }
     }
 
@@ -539,9 +597,28 @@ public class ParseUtil {
                 return getPersonDataFromParseUser(parseGeoPositionCurrent, remover, tapper, user);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e(PARSE_SAVE_TAG, "get person from db parse exception", e);
         }
         return null;
+    }
+
+
+    public boolean deleteAnonymusAndLogOut() {
+        if (currentUser != null && ParseAnonymousUtils.isLinked(currentUser)) {
+            currentUser.deleteInBackground(new DeleteCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(PARSE_SAVE_TAG, "Error delete anonymus user", e);
+                    }
+
+                }
+            });
+            ParseUser.logOut();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public interface DetailsFoundCallback {

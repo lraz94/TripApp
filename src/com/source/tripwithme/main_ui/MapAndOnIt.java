@@ -74,7 +74,6 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
     private boolean waitForSecondTapOnMap;
     private Marker lastEncour;
     private Circle lastCircle;
-    private boolean firstTime;
     private Button radarBtn;
     private Button menu;
 
@@ -99,7 +98,6 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
         bitmapOnline = BitmapDescriptorFactory.fromResource(drawable.personguidence);
         bitmapOffline = BitmapDescriptorFactory.fromResource(drawable.offlineuser);
         bitmapPin = BitmapDescriptorFactory.fromResource(drawable.pin);
-        firstTime = true;
         guiQuickHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -107,12 +105,31 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
             }
         };
         this.parseUtil = parseUtil;
+        initMap();
+    }
+
+    private void initMap() {
+        // init map if needed and set defaults
+        if (activityWithResources.servicesConnected()) {
+            try {
+                MapsInitializer.initialize(activityWithResources);
+            } catch (Exception e) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activityWithResources);
+                builder.setMessage(e.getMessage())
+                    .setTitle("You've got error with Google Maps !!! message is: " + e.getMessage())
+                    .setCancelable(true);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+        // start temp location
+        userMarker = addMapMarker(new LatLng(0, 0), "This is you!",
+                                  "Temporary starting position (0,0)", bitmapYou);
     }
 
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
         if (!marker.equals(userMarker)) {
             PersonVisibleData person = personMap.get(marker);
             if (person != null) {
@@ -132,12 +149,6 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
                 activityWithResources.startActivity(intent);
             }
         });
-        //Button thirdscreenBtn = (Button)activityWithResources.findViewById(id.thirdscreen);
-        //thirdscreenBtn.setOnClickListener(new OnClickListener() {
-        //    public void onClick(View v) {
-        //        // todo third screen
-        //    }
-        //});
         radarBtn = (Button)activityWithResources.findViewById(id.radar);
         radarBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View arg0) {
@@ -188,25 +199,9 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
 
 
     public synchronized void showNewLocationOnMap(LatLng currentPlace) {
-        // init map if needed and set defaults
-        if (firstTime) {
-            firstTime = false;
-            if (activityWithResources.servicesConnected()) {
-                try {
-                    MapsInitializer.initialize(activityWithResources);
-                } catch (Exception e) {
-                    firstTime = true; // can return here
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activityWithResources);
-                    builder.setMessage(e.getMessage())
-                        .setTitle("You've got error with Google Maps !!! message is: " + e.getMessage())
-                        .setCancelable(true);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            }
-        } else {
-            userMarker.remove();
-        }
+        // always remove since user is starting with fake marker until getting real one
+        userMarker.remove();
+
         // move camera to currentPlace
         CameraPosition cameraPosition = new CameraPosition.Builder()
             .target(currentPlace)
@@ -423,7 +418,7 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
                 try {
                     lastCountryThread.join();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.e("Countries", "interupted in with last", e);
                 }
             }
             ParseGeoPoint encourGeo = new ParseGeoPoint(encour.latitude, encour.longitude);

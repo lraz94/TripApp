@@ -13,5 +13,8 @@
     <string name="selectPopoleStr">"Select an active person"</string>
     <string name="deletePerson">Delete</string>
     <string name="remove">Remove</string>
+    <string name="gettingdata">Retrieve Pics...</string>
+    <string name="listisupdated">List up-to-date</string>
+    <string name="nofriends">No Friends :(</string>
 
 </resources>

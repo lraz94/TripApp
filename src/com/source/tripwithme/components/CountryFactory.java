@@ -1,6 +1,7 @@
 package com.source.tripwithme.components;
 
 import android.content.Context;
+import android.util.Log;
 import com.parse.ParseGeoPoint;
 import com.source.tripwithme.R.array;
 import org.apache.http.HttpResponse;
@@ -579,7 +580,7 @@ public final class CountryFactory {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("Countries", "Failure in countries", e);
             }
             return null;
         }

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -95,6 +96,7 @@ public class UsersManagerUI {
         if (me != null) {
             if (parseUtil.isSignedUp()) {
                 usernameEdit.setText(me.name());
+                usernameEdit.setEnabled(false);
                 emailEdit.setText(me.getEmail());
                 emailEdit.setEnabled(false);
                 passwordEdit.setText("********");
@@ -226,8 +228,9 @@ public class UsersManagerUI {
                 String username = usernameEdit.getText().toString();
                 String password = passwordEdit.getText().toString();
                 String email = emailEdit.getText().toString();
-                if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-                    Toast.makeText(context, "Cannot continue w/o user name or password", Toast.LENGTH_SHORT)
+                if (username == null || username.isEmpty() || password == null || password.isEmpty() ||
+                    email == null || email.isEmpty()) {
+                    Toast.makeText(context, "Cannot continue w/o user name, password and email", Toast.LENGTH_SHORT)
                         .show();
                 } else {
                     parseUtil.signupIfNeeded(me, username, password, email, new ActionDoneCallback() {
@@ -270,7 +273,7 @@ public class UsersManagerUI {
                 primarySelected = true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("ImageUri", "IOException", e);
             Toast.makeText(context, "Cannot update image for user", Toast.LENGTH_SHORT).show();
         }
     }

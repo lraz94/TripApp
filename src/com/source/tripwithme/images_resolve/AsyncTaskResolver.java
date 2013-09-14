@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
+import android.util.Log;
 import com.parse.ProgressCallback;
 import com.source.tripwithme.visible_data.BaseVisibleData;
 
@@ -63,7 +64,7 @@ public class AsyncTaskResolver extends AsyncTask<Void, Integer, Void> {
                 Thread.sleep(SLEEP_TO_VALIDATE_END);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.e("Async", "Interupted", e);
         }
         return null;
     }

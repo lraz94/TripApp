@@ -27,11 +27,13 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
     private String email;
     private boolean isCheckedIn;
     private Spanned spannedHistory;
+    private int requestNumber;
 
     public PersonVisibleData(String name, String uniqueChatID, PointWithDistance address, String status,
                              ImageResolver photo, ImageResolver[] secondaryPhotos, String email,
                              RemoverCallback remover, TappedCallback tapper, Country primaryCountry,
-                             SocialNetwork[] socialNetworks, boolean checkedIn, boolean onUserFriendsList) {
+                             SocialNetwork[] socialNetworks, boolean checkedIn, boolean onUserFriendsList,
+                             int requestNumber) {
         super(name, address, status, photo, secondaryPhotos, remover, tapper);
         this.uniqueChatID = uniqueChatID;
         this.country = primaryCountry;
@@ -42,6 +44,7 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
         personArrayAdapterCreator = new PersonArrayAdapterCreator(this);
         spannedHistory = new SpannableString("");
         this.onUserFriendsList = onUserFriendsList;
+        this.requestNumber = requestNumber;
     }
 
     public Country getCountry() {
@@ -172,11 +175,16 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
 
     public static PersonVisibleData minimalPersonByID(String personID) {
         return new PersonVisibleData(null, personID, null, null, null, null, null, null, null, null, null, false,
-                                     false);
+                                     false, 0);
 
     }
 
     public boolean isOnUserFriendsList() {
         return onUserFriendsList;
     }
+
+    public boolean isMatchToCurrentRequest(int currentRequest) {
+        return currentRequest == requestNumber;
+    }
+
 }

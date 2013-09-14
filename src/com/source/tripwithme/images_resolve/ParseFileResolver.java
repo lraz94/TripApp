@@ -3,6 +3,7 @@ package com.source.tripwithme.images_resolve;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -47,7 +48,7 @@ public class ParseFileResolver implements ImageResolver {
                                                      got = true;
                                                  } else {
                                                      exceptionsThrown = true;
-                                                     e.printStackTrace();
+                                                     Log.e("Resolve", "Failure in resolving", e);
                                                      parseUtil.showErrorInAccountDialog(e, false);
                                                  }
                                              }

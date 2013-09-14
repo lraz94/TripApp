@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,12 +25,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -55,6 +50,8 @@ import com.source.tripwithme.databases.ParseUtil.DetailsFoundCallback;
 import com.source.tripwithme.main_ui.CountriesDialog;
 import com.source.tripwithme.main_ui.MapAndOnIt;
 import com.source.tripwithme.main_ui.UsersManagerUI;
+import com.source.tripwithme.managers.LocationManager;
+import com.source.tripwithme.managers.MessagesHelper;
 import com.source.tripwithme.people_menu.PeopleMenu;
 import com.source.tripwithme.people_menu.UserItemAdapter;
 import com.source.tripwithme.visible_data.BaseVisibleData;
@@ -66,10 +63,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
-public class TripWithMeMain extends Activity implements ListenerOnCollection<PointWithID>,
-    LocationListener,
-    ConnectionCallbacks,
-    OnConnectionFailedListener {
+public class TripWithMeMain extends Activity implements ListenerOnCollection<PointWithID>, LocationListener {
 
     // distance consts and limits
     private static final double INITIAL_INTEREST_DISTANCE = 50;
@@ -77,8 +71,6 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private static final int INTERESTS_LIMIT = 5;
 
     private static final long ONE_MINUTE_MILLIS = 60000L;
-
-    private static final long DEFAULT_LOCATION_UPDATES_INTERVAL_MILLIS = 5 * ONE_MINUTE_MILLIS;
 
     // formating consts
     public static final DecimalFormat DECIMAL_FORMAT_TWO_POINTS = new DecimalFormat("#.00");
@@ -96,9 +88,9 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     public static final int REQUEST_PHOTO_HANDLER = 150;
     public static final int SHOW_SAVE_LOCATION_ERROR_HANDLER = 250;
     public static final int ADAPTER_NEW_PERSON_HANDLER = 350;
-    private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 450;
-    private static final String LOCATION_HANDELING_TAG = "LocationHandeling";
+    public static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 450;
     private static final String UPDATE_TAG = "UpdateState";
+    private static final String GOOGLE_SERVICES_TAG = "GoogleSevices";
 
     // init right away - should be final
     public static String APP_NAME;
@@ -131,20 +123,18 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     // messages
     private ParseGeoPoint lastInterestGeoForMsgs;
 
-    // refresh location+friends
-    private long millisIntervalBetweenRefresh;
-
-    // A request to connect to Location Services
-    private LocationRequest mLocationRequest;
-
-    // Stores the current instantiation of the location client in this object
-    private LocationClient mLocationClient;
-
+    // location
     private boolean refershLocation;
 
     private double lastDistance;
+
     private boolean readyForNextLocationChange;
+
     private boolean appIsOn;
+
+    private LocationManager loationManager;
+
+    private long lastSucceededChange;
 
 
     @Override
@@ -174,18 +164,17 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
 
                 appIsOn = true;
 
-                updateByLocationIfCan();
+                boolean updatedLocationFirstTime = updateByLocationIfCan();
+                if (!updatedLocationFirstTime) {
+                    enableButtons(); // allow user to get locations in other way.
+                }
             }
         });
     }
 
     private boolean updateByLocationIfCan() {
-        if (mLocationClient.isConnected()) {
-            Location lastKnown = mLocationClient.getLastLocation();
-            return currentLocationAsInterestPoint(lastKnown);
-        } else {
-            return false;
-        }
+        Location lastKnown = loationManager.getCurrentLocation();
+        return currentLocationAsInterestPoint(lastKnown, System.currentTimeMillis());
     }
 
     private void startMassages() {
@@ -203,7 +192,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             if (!servicesConnected()) {
                 Toast.makeText(this, "Fix Google Play Services and restart application", Toast.LENGTH_LONG).show();
             } else {
-                Log.e(LOCATION_HANDELING_TAG, "Failure in map", e);
+                Log.e(GOOGLE_SERVICES_TAG, "Failure in map", e);
                 showErrorInMapAndExit();
             }
         }
@@ -214,7 +203,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private void addPeopleMenuAdapter() {
         adapter = new UserItemAdapter(this, new ArrayList<PersonVisibleData>());
         people.addListListener(adapter.getNewListener(guiHandler));
-        new PeopleMenu(adapter); // statically add adapater...
+        new PeopleMenu(adapter, getString(string.selectPopoleStr)); // statically add adapater...
     }
 
     private void showErrorInMapAndExit() {
@@ -237,21 +226,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         // boolean to not interupt ongoing location change
         readyForNextLocationChange = true;
 
-        lastDistance = INITIAL_INTEREST_DISTANCE;
-
-        millisIntervalBetweenRefresh = DEFAULT_LOCATION_UPDATES_INTERVAL_MILLIS;
-
-        // Create a new global location parameters object
-        mLocationRequest = LocationRequest.create();
-        // Set the update interval
-        mLocationRequest.setInterval(millisIntervalBetweenRefresh);
-        // Use high accuracy
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        // Set the interval ceiling to one minute
-        mLocationRequest.setFastestInterval(ONE_MINUTE_MILLIS);
-
-        // Create a new location client, using the enclosing class to handle callbacks.
-        mLocationClient = new LocationClient(this, this, this);
+        loationManager = LocationManager.instance(this);
 
         btnAroundYou = (Button)this.findViewById(id.aroundyou);
         btnAroundYou.setOnClickListener(new OnClickListener() {
@@ -301,6 +276,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         remover = new ListRemoverCallback();
         tapper = new PersonTapperToMapCallback();
         countryFactory = CountryFactory.getLanguageFactorySigelton(this);
+        lastDistance = INITIAL_INTEREST_DISTANCE;
         guiHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -314,7 +290,14 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
                                    Toast.LENGTH_LONG).show();
                 } else if (msg.what == ADAPTER_NEW_PERSON_HANDLER) {
                     PersonVisibleData person = (PersonVisibleData)msg.obj;
-                    adapter.add(person);
+                    // Search if user is relevant or resolving took too long and user no longer needed
+                    if (person.isMatchToCurrentRequest(parseUtil.getRequestNumber())) {
+                        adapter.add(person);
+                        adapter.updateFriendsCount();
+                    } else {
+                        Log.d("AdapterAddPerson", "OLD Person isn't added to friends list: " + person.name());
+                    }
+                    adapter.publishEnd();
                 }
             }
         };
@@ -327,10 +310,13 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     //    }
     //}
 
-    private boolean currentLocationAsInterestPoint(Location currentLocation) {
+    private boolean currentLocationAsInterestPoint(Location currentLocation, long timeOfRequestMillis) {
         if (currentLocation != null) {
             if (readyForNextLocationChange && appIsOn) {
                 readyForNextLocationChange = false; // will be ready only after end of people fetching from DB
+                lastSucceededChange = timeOfRequestMillis;
+                Log.d(LocationManager.LOCATION_HANDELING_TAG,
+                      "Conditions FILLED in setting current location as interest point!");
                 double lat = currentLocation.getLatitude();
                 double longi = currentLocation.getLongitude();
                 // show in map on ui thread
@@ -376,7 +362,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             try {
                 ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e(ParseUtil.FACEBOOK_TAG, "Problem with Facebook login", e);
                 Toast.makeText(this, "Problem with Facebook login", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == CONNECTION_FAILURE_RESOLUTION_REQUEST) {
@@ -384,12 +370,12 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
                 // If Google Play services resolved the problem
                 case Activity.RESULT_OK:
                     // Log the result
-                    Log.d(LOCATION_HANDELING_TAG, "Was resolved");
+                    Log.d(LocationManager.LOCATION_HANDELING_TAG, "Was resolved");
                     break;
                 // If any other result was returned by Google Play services
                 default:
                     // Log the result
-                    Log.d(LOCATION_HANDELING_TAG, "Not Resolved !!!");
+                    Log.d(LocationManager.LOCATION_HANDELING_TAG, "Not Resolved !!!");
                     break;
             }
         }
@@ -461,14 +447,14 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             }
         });
         EditText intervalEdit = (EditText)dialog.findViewById(id.changeintervaledit);
-        intervalEdit.setText(Long.toString(millisIntervalBetweenRefresh / ONE_MINUTE_MILLIS));
+        intervalEdit.setText(Long.toString(loationManager.getMillisIntervalBetweenRefresh() / ONE_MINUTE_MILLIS));
         intervalEdit.addTextChangedListener(new TextWatcherAfterOnly() {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
                     long typedToMilis = Integer.parseInt(s.toString().trim()) * ONE_MINUTE_MILLIS;
                     if (typedToMilis > 0) {  // in big numbers there can be overflaw
-                        millisIntervalBetweenRefresh = typedToMilis;
+                        loationManager.setMillisIntervalBetweenRefresh(typedToMilis);
                     }
                 } catch (Exception ignored) {
                 }
@@ -526,49 +512,14 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     }
 
 
-    // location handeling
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.d(LOCATION_HANDELING_TAG, "Connected to client");
-        startPeriodicUpdates();
-    }
-
-    @Override
-    public void onDisconnected() {
-        Log.d(LOCATION_HANDELING_TAG, "Disconnected from client");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(LOCATION_HANDELING_TAG, "connection failed to client!");
-        /*
-         * Google Play services can resolve some errors it detects.
-         * If the error has a resolution, try sending an Intent to
-         * start a Google Play services activity that can resolve
-         * error.
-         */
-        if (connectionResult.hasResolution()) {
-            try {
-                // Start an Activity that tries to resolve the error
-                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-                /*
-                * Thrown if Google Play services canceled the original
-                * PendingIntent
-                */
-            } catch (SendIntentException e) {
-                // Log the error
-                e.printStackTrace();
-            }
-        } else {
-            // If no resolution is available, display a dialog to the user with the error.
-            showErrorDialog(connectionResult.getErrorCode());
-        }
-    }
-
     @Override
     public void onLocationChanged(Location location) {
         if (refershLocation) {  // minimal check unique for listener
-            currentLocationAsInterestPoint(location);
+            // check time because updates can come faster by Android doc, and to sychronize with one time requests.
+            long now = System.currentTimeMillis();
+            if (now - lastSucceededChange >= loationManager.getMillisIntervalBetweenRefresh()) {
+                currentLocationAsInterestPoint(location, now);
+            }
         }
     }
 
@@ -706,7 +657,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             db.close();
         }
         // logout & delete user if anonymus
-        parseUtil.deleteAnonymus();
+        parseUtil.deleteAnonymusAndLogOut();
     }
 
     // put user to last recorded state on start - TODO need to fill ready conditions...
@@ -724,7 +675,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         }
 
         // Location
-        mLocationClient.connect();
+        loationManager.connect();
     }
 
     // put user to offline on Stop + stop updates
@@ -738,24 +689,8 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         }
 
         // Location
-        stopPeriodicUpdates();
-        // After disconnect() is called, the client is considered "dead".
-        mLocationClient.disconnect();
-
+        loationManager.stopAndDisconnect();
         super.onStop();
-    }
-
-    // periodic updates are started each on start and might not be used if user doesn't want them
-    private void startPeriodicUpdates() {
-        if (mLocationClient.isConnected() && servicesConnected()) {
-            mLocationClient.requestLocationUpdates(mLocationRequest, this);
-        }
-    }
-
-    private void stopPeriodicUpdates() {
-        if (mLocationClient.isConnected() && servicesConnected()) {
-            mLocationClient.removeLocationUpdates(this);
-        }
     }
 
     private String getStateString() {
@@ -786,7 +721,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         // If Google Play services is available
         if (ConnectionResult.SUCCESS == resultCode) {
             // In debug mode, log the status
-            Log.d(LOCATION_HANDELING_TAG, "Google play services available");
+            Log.d(GOOGLE_SERVICES_TAG, "Google play services available");
             // Continue
             return true;
             // Google Play services was not available for some reason
@@ -800,24 +735,6 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             return false;
         }
     }
-
-    /**
-     * Show a dialog returned by Google Play services for the
-     * connection error code
-     *
-     * @param errorCode An error code returned from onConnectionFailed
-     */
-    private void showErrorDialog(int errorCode) {
-        // Get the error dialog from Google Play services
-        Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(errorCode, this,
-                                                                   CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        // If Google Play services can provide an error dialog
-        if (errorDialog != null) {
-            errorDialog.getWindow().setGravity(Gravity.CENTER);
-            errorDialog.show();
-        }
-    }
-
 
     private abstract static class TextWatcherAfterOnly implements TextWatcher {
 

@@ -36,14 +36,14 @@
     <list default="true" id="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" name="Default" comment="" />
     <ignored path="TripWithMe.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/fragment.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378674580180" ignored="false" />
+    <file path="/fragment.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378766133915" ignored="false" />
     <file path="/a.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373755125171" ignored="false" />
     <file path="/SecondScreenPepoleDemo.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373746699864" ignored="false" />
     <file path="/ListenersOnList.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373748669829" ignored="false" />
     <file path="/ListWithListeners.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1377808713063" ignored="false" />
     <file path="/FirstScreenMapDemo.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373833547141" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378308478607" ignored="false" />
-    <file path="/TripWithMeMain.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378688455893" ignored="false" />
+    <file path="/TripWithMeMain.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378761741015" ignored="false" />
     <file path="/a.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373755139167" ignored="false" />
     <file path="/AddressPrintsSimple.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373842970117" ignored="false" />
     <file path="/PeopleMarkersOnMap.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373831114256" ignored="false" />
@@ -56,14 +56,14 @@
     <file path="/screenone.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375691091778" ignored="false" />
     <file path="/PointWithDistance.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374621551059" ignored="false" />
     <file path="/BaseVisibleData.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376764854761" ignored="false" />
-    <file path="/PersonVisibleData.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378677577855" ignored="false" />
+    <file path="/PersonVisibleData.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378737472069" ignored="false" />
     <file path="/SocialNetwork.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378245619548" ignored="false" />
     <file path="/RemoverCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374020164584" ignored="false" />
     <file path="/SocialNetworkFactory.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373923443470" ignored="false" />
     <file path="/AllSocialNetworks.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378298750388" ignored="false" />
-    <file path="/a.dummy" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378681766221" ignored="false" />
+    <file path="/a.dummy" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1379195279199" ignored="false" />
     <file path="/UpdateServerPackageDemo.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373926269485" ignored="false" />
-    <file path="/UserItemAdapter.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376660281692" ignored="false" />
+    <file path="/UserItemAdapter.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762651304" ignored="false" />
     <file path="/PersonDialogCreator.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378246880641" ignored="false" />
     <file path="/PersonArrayAdapterCreator.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378248360594" ignored="false" />
     <file path="/DataToImagesViews.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373929679819" ignored="false" />
@@ -71,17 +71,17 @@
     <file path="/FlagableEntity.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373929790425" ignored="false" />
     <file path="/ImageViewsToData.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373931124826" ignored="false" />
     <file path="/UpdateServerDataDemo.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373931494063" ignored="false" />
-    <file path="/PeopleMenu.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376657213894" ignored="false" />
+    <file path="/PeopleMenu.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378745767388" ignored="false" />
     <file path="/TappedCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374020516076" ignored="false" />
     <file path="/ResourceFlagedItem.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1373934725226" ignored="false" />
     <file path="/LanguageFactory.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374182709022" ignored="false" />
     <file path="/DataInsertToImageViews.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376580053415" ignored="false" />
-    <file path="/MapAndOnIt.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378681220938" ignored="false" />
+    <file path="/MapAndOnIt.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1379191856790" ignored="false" />
     <file path="/OnePersonFoundCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374012096067" ignored="false" />
     <file path="/PeopleServer.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375560619888" ignored="false" />
     <file path="/listcountries.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375699581878" ignored="false" />
-    <file path="/CountryFactory.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375699143930" ignored="false" />
-    <file path="/strings.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374350923321" ignored="false" />
+    <file path="/CountryFactory.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378761773210" ignored="false" />
+    <file path="/strings.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378752334001" ignored="false" />
     <file path="/Dummy.txt" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376863388703" ignored="false" />
     <file path="/Country.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374352615313" ignored="false" />
     <file path="/CountryFullNameLatLng.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1374349532431" ignored="false" />
@@ -99,16 +99,16 @@
     <file path="/activity_main.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376864064665" ignored="false" />
     <file path="/AccoutManager.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375118282307" ignored="false" />
     <file path="/UsersManager.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375568792489" ignored="false" />
-    <file path="/OneFoundCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375128065214" ignored="false" />
+    <file path="/OneFoundCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378737200407" ignored="false" />
     <file path="/ThreadedImageResolver.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375133128956" ignored="false" />
     <file path="/AsyncShowDialog.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375180069662" ignored="false" />
-    <file path="/AsyncTaskResolver.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375996922581" ignored="false" />
+    <file path="/AsyncTaskResolver.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762356435" ignored="false" />
     <file path="$PROJECT_DIR$/src/com/example/tripwithmedemo/AsyncTask.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375217322331" ignored="false" />
     <file path="$PROJECT_DIR$/gen/com/example/tripwithmedemo/BuildConfig.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375459072171" ignored="false" />
-    <file path="/ParseUtil.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378677488063" ignored="false" />
-    <file path="/UsersManagerUI.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378299388815" ignored="false" />
+    <file path="/ParseUtil.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1379195606364" ignored="false" />
+    <file path="/UsersManagerUI.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1379195697951" ignored="false" />
     <file path="/ImageResolver.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376594651594" ignored="false" />
-    <file path="/ParseFileResolver.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376663196539" ignored="false" />
+    <file path="/ParseFileResolver.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762389557" ignored="false" />
     <file path="/DummyProgressCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375635612102" ignored="false" />
     <file path="/DummyBitmapCallback.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1375633628971" ignored="false" />
     <file path="/ProgressCallbackCreator.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376596430034" ignored="false" />
@@ -143,16 +143,16 @@
     <file path="C:/android-sdk/extras/google/google_play_services/samples/auth/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376057100418" ignored="false" />
     <file path="C:/android-sdk/extras/google/google_play_services/samples/panorama/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376057100419" ignored="false" />
     <file path="C:/android-sdk/extras/google/google_play_services/samples/plus/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376057100419" ignored="false" />
-    <file path="/OfflineMessagesUtil.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376254381046" ignored="false" />
+    <file path="/OfflineMessagesUtil.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762693716" ignored="false" />
     <file path="/*.txt" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376849018138" ignored="false" />
-    <file path="/ButtonEffect.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376350240689" ignored="false" />
+    <file path="/ButtonEffect.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762417558" ignored="false" />
     <file path="/ChatStarter.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376768633018" ignored="false" />
     <file path="/SendMessager.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376771342377" ignored="false" />
     <file path="/CollectionWithListeners.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376848632320" ignored="false" />
     <file path="/HashSetWithListeners.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376851232885" ignored="false" />
     <file path="/Uniqueable.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1376850496279" ignored="false" />
     <file path="/TreeSetWithListeners.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1377808589433" ignored="false" />
-    <file path="/MessagesHelper.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378677002897" ignored="false" />
+    <file path="/MessagesHelper.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762620421" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/model/OpenGraphObject.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857878" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/model/GraphLocation.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857878" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/model/CreateGraphObject.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857878" ignored="false" />
@@ -180,9 +180,7 @@
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/widget/FacebookFragment.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_top_background.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
-    <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_picker_list_selector.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_loginbutton_silver.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
-    <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_top_button.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/Validate.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/AnalyticsEvents.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/ImageResponseCache.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
@@ -194,9 +192,7 @@
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/ImageRequest.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_button_blue.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/ImageDownloader.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
-    <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/Logger.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/Utility.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
-    <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_picker_item_background.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/CacheableRequestBatch.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_button_check.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/internal/FileLruCache.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857879" ignored="false" />
@@ -206,8 +202,8 @@
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/values-he/strings.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857880" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/gen/com/facebook/android/BuildConfig.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220868934" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/facebook/res/values-iw/strings.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378220857880" ignored="false" />
-    <file path="$PROJECT_DIR$/gen/com/source/tripwithme/BuildConfig.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378600141172" ignored="false" />
-    <file path="C:/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/gen/com/google/android/gms/BuildConfig.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378600141742" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/com/source/tripwithme/BuildConfig.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378746828070" ignored="false" />
+    <file path="C:/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/gen/com/google/android/gms/BuildConfig.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378746824624" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/samples/PlacePickerSample/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378598318985" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/samples/SwitchUserSample/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378598318985" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/samples/GraphApiSample/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378598318985" ignored="false" />
@@ -217,6 +213,9 @@
     <file path="C:/app/facebook-android-sdk-3.5/samples/ProfilePictureSample/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378598318985" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/samples/HelloFacebookSample/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378598318985" ignored="false" />
     <file path="C:/app/facebook-android-sdk-3.5/samples/RPSSample/project.properties" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378598318985" ignored="false" />
+    <file path="/LocationManager.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378762568251" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/com/source/tripwithme/R.java" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378724767895" ignored="false" />
+    <file path="/screentwo.xml" changelist="5f3e0c44-8feb-4908-80c6-08034aa8bfb3" time="1378743554689" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,28 +235,8 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://C:/android-sdk/sources/android-17/java/util/LinkedHashSet.java" line="41" class="java.util.LinkedHashSet" package="java.util">
-        <option name="WATCH_ENTRY" value="true" />
-        <option name="WATCH_EXIT" value="true" />
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </method_breakpoints>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java" line="46" class="com.source.tripwithme.images_resolve.AsyncTaskResolver" package="com.source.tripwithme.images_resolve">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java" line="47" class="com.source.tripwithme.images_resolve.AsyncTaskResolver" package="com.source.tripwithme.images_resolve">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -272,7 +251,7 @@
         <option name="CONDITION" value="&#13;&#13;JAVA" />
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="81" class="com.source.tripwithme.databases.OfflineMessagesUtil$1" package="com.source.tripwithme.databases">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="84" class="com.source.tripwithme.databases.OfflineMessagesUtil$1" package="com.source.tripwithme.databases">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -287,7 +266,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="76" class="com.source.tripwithme.databases.OfflineMessagesUtil$1$1" package="com.source.tripwithme.databases">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="79" class="com.source.tripwithme.databases.OfflineMessagesUtil$1$1" package="com.source.tripwithme.databases">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -302,7 +281,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="40" class="com.source.tripwithme.databases.OfflineMessagesUtil" package="com.source.tripwithme.databases">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="43" class="com.source.tripwithme.databases.OfflineMessagesUtil" package="com.source.tripwithme.databases">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -317,7 +296,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="32" class="com.source.tripwithme.databases.OfflineMessagesUtil" package="com.source.tripwithme.databases">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" line="35" class="com.source.tripwithme.databases.OfflineMessagesUtil" package="com.source.tripwithme.databases">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -332,7 +311,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java" line="62" class="com.source.tripwithme.images_resolve.AsyncTaskResolver" package="com.source.tripwithme.images_resolve">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java" line="63" class="com.source.tripwithme.images_resolve.AsyncTaskResolver" package="com.source.tripwithme.images_resolve">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -384,6 +363,26 @@
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
+    <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://C:/android-sdk/sources/android-17/java/util/LinkedHashSet.java" line="41" class="java.util.LinkedHashSet" package="java.util">
+        <option name="WATCH_ENTRY" value="true" />
+        <option name="WATCH_EXIT" value="true" />
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </method_breakpoints>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -393,28 +392,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DataInsertToImageViews.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/DataInsertToImageViews.java">
+      <file leaf-file-name="ParseUtil.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/ParseUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="23" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="477" column="16" selection-start="19934" selection-end="19934" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#5398#6444#0" expanded="true" />
+                <element signature="e#5947#6303#0" expanded="true" />
+                <element signature="e#6276#6277#0" expanded="true" />
+                <element signature="e#6429#6430#0" expanded="true" />
+                <element signature="e#7157#7617#0" expanded="true" />
+                <element signature="e#7606#7607#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AsyncTaskResolver.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java">
+      <file leaf-file-name="PersonVisibleData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonVisibleData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="29" selection-start="2009" selection-end="2009" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AllSocialNetworks.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/AllSocialNetworks.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="21" selection-start="641" selection-end="641" vertical-scroll-proportion="0.0">
+            <state line="144" column="16" selection-start="5294" selection-end="5294" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -423,7 +420,86 @@
       <file leaf-file-name="UsersManagerUI.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/UsersManagerUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="273" column="18" selection-start="13578" selection-end="13578" vertical-scroll-proportion="0.0">
+            <state line="246" column="31" selection-start="12491" selection-end="12491" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#9497#9775#0" expanded="true" />
+                <element signature="e#9748#9749#0" expanded="true" />
+                <element signature="e#11336#12483#0" expanded="true" />
+                <element signature="e#12036#12439#0" expanded="true" />
+                <element signature="e#12416#12417#0" expanded="true" />
+                <element signature="e#12472#12473#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocationManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/managers/LocationManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="129" column="8" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessagesHelper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/managers/MessagesHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="36" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CountryFactory.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/CountryFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="582" column="18" selection-start="37040" selection-end="37040" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ButtonEffect.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/ButtonEffect.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="31" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CountriesDialog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/CountriesDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="101" column="29" selection-start="4330" selection-end="4330" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ParseFileResolver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/ParseFileResolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="78" column="31" selection-start="3385" selection-end="3385" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AsyncTaskResolver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="23" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AllSocialNetworks.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/AllSocialNetworks.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="5" selection-start="641" selection-end="641" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -432,70 +508,7 @@
       <file leaf-file-name="UserItemAdapter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/people_menu/UserItemAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="13" selection-start="2319" selection-end="2319" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonArrayAdapterCreator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonArrayAdapterCreator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="44" selection-start="2136" selection-end="2136" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MessagesHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/MessagesHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="51" selection-start="2727" selection-end="2727" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ParseUtil.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/ParseUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="0" selection-start="3861" selection-end="4519" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonDialogCreator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonDialogCreator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="38" selection-start="3773" selection-end="3773" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonVisibleData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonVisibleData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="12" selection-start="4070" selection-end="4070" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PeopleMenu.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/people_menu/PeopleMenu.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="0" selection-start="2660" selection-end="2660" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapAndOnIt.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/MapAndOnIt.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="200" column="35" selection-start="8233" selection-end="8233" vertical-scroll-proportion="0.0">
+            <state line="66" column="74" selection-start="2987" selection-end="2987" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -504,50 +517,74 @@
       <file leaf-file-name="TripWithMeMain.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/TripWithMeMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="175" column="23" selection-start="6222" selection-end="6222" vertical-scroll-proportion="0.39542484">
+            <state line="189" column="34" selection-start="6468" selection-end="6468" vertical-scroll-proportion="-0.12063492">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapAndOnIt.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/MapAndOnIt.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="79" column="14" selection-start="3322" selection-end="3322" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#9444#9878#0" expanded="true" />
-                <element signature="e#9867#9868#0" expanded="true" />
-                <element signature="e#10241#10403#0" expanded="true" />
-                <element signature="e#10392#10393#0" expanded="true" />
-                <element signature="e#16597#16938#0" expanded="true" />
-                <element signature="e#16919#16920#0" expanded="true" />
+                <element signature="e#5984#6219#0" expanded="true" />
+                <element signature="e#6208#6209#0" expanded="true" />
+                <element signature="e#6331#6466#0" expanded="true" />
+                <element signature="e#6455#6456#0" expanded="true" />
+                <element signature="e#6611#6760#0" expanded="true" />
+                <element signature="e#6749#6750#0" expanded="true" />
+                <element signature="e#7008#7331#0" expanded="true" />
+                <element signature="e#7320#7321#0" expanded="true" />
+                <element signature="e#11190#11406#0" expanded="true" />
+                <element signature="e#11395#11396#0" expanded="true" />
+                <element signature="e#12485#12997#0" expanded="true" />
+                <element signature="e#12982#12983#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InterestsDatabase.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/InterestsDatabase.java">
+      <file leaf-file-name="OfflineMessagesUtil.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="116" column="37" selection-start="5326" selection-end="5326" vertical-scroll-proportion="0.0">
+            <state line="23" column="42" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PointWithID.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/PointWithID.java">
+      <file leaf-file-name="PersonDialogCreator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonDialogCreator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="38" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0">
+            <state line="142" column="66" selection-start="6170" selection-end="6170" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LimitedListWithListeners.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/LimitedListWithListeners.java">
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="35" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
+            <state line="19" column="35" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccessTokenSource.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/AccessTokenSource.java">
+      <file leaf-file-name="PersonArrayAdapterCreator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonArrayAdapterCreator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="55" selection-start="985" selection-end="985" vertical-scroll-proportion="0.0">
+            <state line="60" column="32" selection-start="2639" selection-end="2639" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseVisibleData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/BaseVisibleData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="71" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -563,32 +600,32 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/CollectionWithListeners.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/ButtonEffect.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/Uniqueable.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/HashSetWithListeners.java" />
-        <option value="$PROJECT_DIR$/res/menu/activity_main.xml" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/TreeSetWithListeners.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/ListWithListeners.java" />
-        <option value="$PROJECT_DIR$/res/layout/refreshmedialog.xml" />
-        <option value="C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/model/GraphUser.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/SocialNetwork.java" />
-        <option value="$PROJECT_DIR$/res/layout/baloonlayout.xml" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonDialogCreator.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonArrayAdapterCreator.java" />
         <option value="$PROJECT_DIR$/res/layout/listitem.xml" />
         <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/AllSocialNetworks.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/main_ui/UsersManagerUI.java" />
         <option value="$PROJECT_DIR$/res/layout/update.xml" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/source/tripwithme/MessagesHelper.java" />
         <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/LimitedListWithListeners.java" />
         <option value="$PROJECT_DIR$/src/com/source/tripwithme/databases/InterestsDatabase.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/people_menu/PeopleMenu.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/LocationManager.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/Managers/LocationManager.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/databases/OneFoundCallback.java" />
         <option value="$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonVisibleData.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/databases/ParseUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/source/tripwithme/main_ui/MapAndOnIt.java" />
+        <option value="$PROJECT_DIR$/res/layout/screentwo.xml" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/people_menu/PeopleMenu.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/source/tripwithme/TripWithMeMain.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/components/CountryFactory.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/ParseFileResolver.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/main_ui/ButtonEffect.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/managers/LocationManager.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/people_menu/UserItemAdapter.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/managers/MessagesHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/main_ui/MapAndOnIt.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/databases/ParseUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/source/tripwithme/main_ui/UsersManagerUI.java" />
       </list>
     </option>
   </component>
@@ -624,8 +661,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -644,8 +679,210 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visible_data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="people_menu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="managers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main_ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="databases" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripwithme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripWithMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -659,7 +896,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="last_opened_file_path" value="C:/android-sdk/extras/android/support/v4/android-support-v4.jar!/" />
-    <property name="AndroidLayoutSelectedEditor" value="text-editor" />
+    <property name="AndroidLayoutSelectedEditor" value="android-designer" />
     <property name="project.structure.side.proportion" value="0.22573352" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -966,7 +1203,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262295" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33114755" sideWeight="0.54848486" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41967213" sideWeight="0.54848486" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.25245902" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="WF Diagnostic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14705883" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33934426" sideWeight="0.99848944" order="3" side_tool="false" content_ui="tabs" />
@@ -975,20 +1212,20 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.68161434" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Notes" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6704918" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32459018" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25409836" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32399103" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28196722" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262295" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24924242" sideWeight="0.6147541" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2659091" sideWeight="0.66885245" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3189394" sideWeight="0.7180328" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40819672" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32786885" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.093939394" sideWeight="0.66721314" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.09363525" sideWeight="0.67002237" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35530302" sideWeight="0.66721314" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40269276" sideWeight="0.67002237" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1659091" sideWeight="0.5868853" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1063,191 +1300,212 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonArrayAdapterCreator.java">
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/managers/LocationManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="44" selection-start="2136" selection-end="2136" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar!/com/google/android/gms/location/LocationListener.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="26" selection-start="206" selection-end="223" vertical-scroll-proportion="0.36305732" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/update.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/screenone.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="2147" selection-end="2147" vertical-scroll-proportion="2.52" />
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/UsersManagerUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="273" column="18" selection-start="13578" selection-end="13578" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/android-sdk/sources/android-17/com/android/locationtracker/TrackerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="14" selection-start="3660" selection-end="3660" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://C:/app/facebook-android-sdk-3.5/facebook/src/com/facebook/AccessTokenSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="55" selection-start="985" selection-end="985" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/android-sdk/sources/android-17/android/util/Log.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="19" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.33114755" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/MessagesHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="51" selection-start="2727" selection-end="2727" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/LimitedListWithListeners.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="35" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/SocialNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="11" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/InterestsDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="37" selection-start="5326" selection-end="5326" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/refreshmedialog.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/people_menu/PeopleMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="2660" selection-end="2660" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="41" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonVisibleData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="12" selection-start="4070" selection-end="4070" vertical-scroll-proportion="0.0">
+        <state line="129" column="8" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/AsyncTaskResolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="29" selection-start="2009" selection-end="2009" vertical-scroll-proportion="0.0">
+        <state line="44" column="23" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/PointWithID.java">
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/images_resolve/ParseFileResolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="38" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0">
+        <state line="78" column="31" selection-start="3385" selection-end="3385" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/logindialog.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/ButtonEffect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="31" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/CountriesDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="29" selection-start="4330" selection-end="4330" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/screentwo.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/baloonlayout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/DataInsertToImageViews.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="23" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
+      <provider editor-type-id="text-editor">
+        <state line="36" column="34" selection-start="1326" selection-end="1335" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/android-sdk/sources/android-17/android/app/Dialog.java">
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/components/TreeSetWithListeners.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="16" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://C:/app/facebook-android-sdk-3.5/facebook/res/drawable/com_facebook_picker_item_background.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="131" selection-start="1471" selection-end="1471" vertical-scroll-proportion="0.61616164" />
+      </provider>
+    </entry>
+    <entry file="file://C:/android-sdk/sources/android-17/java/util/concurrent/FutureTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="136" column="0" selection-start="5325" selection-end="5325" vertical-scroll-proportion="0.33035713" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/OfflineMessagesUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="42" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/screenone.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/ParseUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonDialogCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="0" selection-start="3861" selection-end="4519" vertical-scroll-proportion="0.0">
+        <state line="142" column="66" selection-start="6170" selection-end="6170" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonArrayAdapterCreator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="32" selection-start="2639" selection-end="2639" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/PersonVisibleData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="144" column="16" selection-start="5294" selection-end="5294" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/managers/MessagesHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="36" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="35" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/MapAndOnIt.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="200" column="35" selection-start="8233" selection-end="8233" vertical-scroll-proportion="0.0">
+        <state line="79" column="14" selection-start="3322" selection-end="3322" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#5984#6219#0" expanded="true" />
+            <element signature="e#6208#6209#0" expanded="true" />
+            <element signature="e#6331#6466#0" expanded="true" />
+            <element signature="e#6455#6456#0" expanded="true" />
+            <element signature="e#6611#6760#0" expanded="true" />
+            <element signature="e#6749#6750#0" expanded="true" />
+            <element signature="e#7008#7331#0" expanded="true" />
+            <element signature="e#7320#7321#0" expanded="true" />
+            <element signature="e#11190#11406#0" expanded="true" />
+            <element signature="e#11395#11396#0" expanded="true" />
+            <element signature="e#12485#12997#0" expanded="true" />
+            <element signature="e#12982#12983#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/visible_data/BaseVisibleData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="71" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar!/com/google/android/gms/location/LocationClient.class">
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/people_menu/PeopleMenu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="40" selection-start="2483" selection-end="2483" vertical-scroll-proportion="0.7010676">
+        <state line="71" column="75" selection-start="2717" selection-end="2717" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/Parse-1.3.1.jar!/com/parse/ParseUser.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="16" selection-start="4059" selection-end="4059" vertical-scroll-proportion="-2.2195122">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/Parse-1.3.1.jar!/com/parse/ParseObject.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="303" column="0" selection-start="15972" selection-end="15972" vertical-scroll-proportion="0.9630682">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/Parse-1.3.1.jar!/com/parse/Task.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="0" selection-start="5574" selection-end="5574" vertical-scroll-proportion="0.5584416">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/android-sdk/sources/android-17/android/widget/Toast.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="236" column="24" selection-start="7012" selection-end="7012" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/databases/ParseUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="477" column="16" selection-start="19934" selection-end="19934" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#5398#6444#0" expanded="true" />
+            <element signature="e#5947#6303#0" expanded="true" />
+            <element signature="e#6276#6277#0" expanded="true" />
+            <element signature="e#6429#6430#0" expanded="true" />
+            <element signature="e#7157#7617#0" expanded="true" />
+            <element signature="e#7606#7607#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/main_ui/UsersManagerUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="246" column="31" selection-start="12491" selection-end="12491" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#9497#9775#0" expanded="true" />
+            <element signature="e#9748#9749#0" expanded="true" />
+            <element signature="e#11336#12483#0" expanded="true" />
+            <element signature="e#12036#12439#0" expanded="true" />
+            <element signature="e#12416#12417#0" expanded="true" />
+            <element signature="e#12472#12473#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/source/tripwithme/TripWithMeMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="23" selection-start="6222" selection-end="6222" vertical-scroll-proportion="0.39542484">
-          <folding>
-            <element signature="e#9444#9878#0" expanded="true" />
-            <element signature="e#9867#9868#0" expanded="true" />
-            <element signature="e#10241#10403#0" expanded="true" />
-            <element signature="e#10392#10393#0" expanded="true" />
-            <element signature="e#16597#16938#0" expanded="true" />
-            <element signature="e#16919#16920#0" expanded="true" />
-          </folding>
+        <state line="189" column="34" selection-start="6468" selection-end="6468" vertical-scroll-proportion="-0.12063492">
+          <folding />
         </state>
       </provider>
     </entry>

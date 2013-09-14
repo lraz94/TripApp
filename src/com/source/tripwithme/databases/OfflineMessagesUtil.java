@@ -1,6 +1,7 @@
 package com.source.tripwithme.databases;
 
 
+import android.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -17,6 +18,8 @@ public class OfflineMessagesUtil {
     private static final String TO_USER_ID_KEY = "forUser";
     private static final String MESSAGES_KEY = "messages";
     private static final String PERSON_ID_SUFFIX_SEPERATOR = "@";
+
+    private static final String OFFLINE_MSG_TAG = "OfflineMessages";
 
     public static List<String> getPendingMessagesBlock(String toUserID) {
         List<String> pendingMsgs = new ArrayList<String>();
@@ -38,7 +41,7 @@ public class OfflineMessagesUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(OFFLINE_MSG_TAG, "pending", e);
         }
         return pendingMsgs;
     }
@@ -74,12 +77,12 @@ public class OfflineMessagesUtil {
                                 }
                                 targetParseObject.save();
                             } catch (Exception error) {
-                                error.printStackTrace();
+                                Log.e(OFFLINE_MSG_TAG, "Failure", error);
                             }
                         }
                     }).start();
                 } else {
-                    e.printStackTrace();
+                    Log.e(OFFLINE_MSG_TAG, "Failure", e);
                 }
             }
         }

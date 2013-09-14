@@ -1,4 +1,4 @@
-package com.source.tripwithme;
+package com.source.tripwithme.managers;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,8 +13,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import com.source.tripwithme.R.id;
+import com.source.tripwithme.TripWithMeMain;
 import com.source.tripwithme.components.TreeSetWithListeners;
 import com.source.tripwithme.databases.OfflineMessagesUtil;
+import com.source.tripwithme.main_ui.ButtonEffect;
 import com.source.tripwithme.visible_data.PersonVisibleData;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.List;
 public class MessagesHelper {
 
 
-    private static final long SLEEP_BETWEEN_MESSAGES_MILLIS = 1000; // 2 sec
+    private static final long SLEEP_BETWEEN_MESSAGES_MILLIS = 10000; // 10 sec
 
     private static final int ADD_PERSON_TO_LIST_HANDLER = 550;
     private static final int REFRESH_BUTTON_AND_HISTORY_HANDLER = 660;
@@ -80,7 +82,7 @@ public class MessagesHelper {
                         Thread.sleep(SLEEP_BETWEEN_MESSAGES_MILLIS);
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.e(MESSAGES_TAG, "interupted in between", e);
                 }
             }
         }).start();
