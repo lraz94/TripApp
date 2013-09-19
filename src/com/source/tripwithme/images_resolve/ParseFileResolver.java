@@ -2,7 +2,6 @@ package com.source.tripwithme.images_resolve;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -17,17 +16,11 @@ public class ParseFileResolver implements ImageResolver {
     private Bitmap bitmap;
     private boolean tried;
 
-    private static final long RESOLVE_SLEEP_MILLIS = 100;
-    private boolean got;
-    private boolean exceptionsThrown;
-
     public ParseFileResolver(ParseFile file, ParseUtil parseUtil) {
         this.file = file;
         this.parseUtil = parseUtil;
         bitmap = null;
         tried = false;
-        got = false;
-        exceptionsThrown = false;
     }
 
 
@@ -43,55 +36,38 @@ public class ParseFileResolver implements ImageResolver {
                                              @Override
                                              public void done(byte[] bytes, ParseException e) {
                                                  if (e == null) {
-                                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                                     bitmapGotCallback.got(bitmap);
-                                                     got = true;
+                                                     try {
+                                                         bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                                     } catch (Exception e1) {
+                                                         Log.e("Resolve", "Failure in resolving", e1);
+                                                     }
                                                  } else {
-                                                     exceptionsThrown = true;
                                                      Log.e("Resolve", "Failure in resolving", e);
                                                      parseUtil.showErrorInAccountDialog(e, false);
                                                  }
+                                                 picIsDone(bitmapGotCallback, progressCallback);
                                              }
                                          }, new ProgressCallback() {
                                              @Override
                                              public void done(Integer integer) {
-                                                 if (integer == 100) {
-                                                     sleepTillGotInBackgroud(progressCallback);
-                                                 } else {
+                                                 if (integer != 100) { // 100 will be given after decode is done
                                                      progressCallback.done(integer);
                                                  }
                                              }
                                          }
                 );
             } else {
-                progressCallback.done(100);
-                bitmapGotCallback.got(bitmap);
+                picIsDone(bitmapGotCallback, progressCallback);
             }
         } else {
-            progressCallback.done(100);
-            bitmapGotCallback.got(bitmap);
+            picIsDone(bitmapGotCallback, progressCallback);
         }
     }
 
-    private void sleepTillGotInBackgroud(final ProgressCallback progressCallback) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    // if exception thrown or we got - done!
-                    while (!exceptionsThrown && !got) {
-                        Thread.sleep(RESOLVE_SLEEP_MILLIS);
-                    }
-                } catch (InterruptedException ignored) {
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                progressCallback.done(100);
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    private void picIsDone(BitmapGotCallback bitmapGotCallback, ProgressCallback progressCallback) {
+        bitmapGotCallback.got(bitmap);
+        progressCallback.done(100);
     }
+
 }
 

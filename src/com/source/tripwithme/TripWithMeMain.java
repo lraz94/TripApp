@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -77,20 +78,24 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     public static final DecimalFormat DECIMAL_FORMAT_ONE_POINT = new DecimalFormat("#.#");
 
     // activities returned
-    private static final int RETURNED_PIC_CODE = 100;
-    public static final int REQUEST_CODE_FACEBOOK = 200;
+    private static final int RETURNED_PIC_CODE = 1000;
+    public static final int REQUEST_CODE_FACEBOOK = 2000;
+    public static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 3000;
 
     // states
     private static final String CHECKED_IN = "Checked in State";
     private static final String CHECKED_OUT = "Checked out State";
 
     // handler
-    public static final int REQUEST_PHOTO_HANDLER = 150;
-    public static final int SHOW_SAVE_LOCATION_ERROR_HANDLER = 250;
-    public static final int ADAPTER_NEW_PERSON_HANDLER = 350;
-    public static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 450;
+    public static final int REQUEST_PHOTO_HANDLER = 1500;
+    public static final int SHOW_SAVE_LOCATION_ERROR_HANDLER = 2500;
+    public static final int ADAPTER_NEW_PERSON_HANDLER = 3500;
+    public static final int RESOLVE_TO_BITMAP_HANDLER = 4500;
+
+
     private static final String UPDATE_TAG = "UpdateState";
     private static final String GOOGLE_SERVICES_TAG = "GoogleSevices";
+
 
     // init right away - should be final
     public static String APP_NAME;
@@ -298,6 +303,9 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
                         Log.d("AdapterAddPerson", "OLD Person isn't added to friends list: " + person.name());
                     }
                     adapter.publishEnd();
+                } else if (msg.what == RESOLVE_TO_BITMAP_HANDLER) {
+                    Bitmap bitmap = (Bitmap)msg.obj;
+                    UsersManagerUI.bitmapReceived(TripWithMeMain.this, bitmap);
                 }
             }
         };

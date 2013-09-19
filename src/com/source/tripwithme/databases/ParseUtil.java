@@ -581,7 +581,7 @@ public class ParseUtil {
         } else {
             callback.details(new PersonVisibleData("Anonymus" + System.currentTimeMillis(), currentUser.getObjectId(),
                                                    null, null, new ParseFileResolver(null, this),
-                                                   new ParseFileResolver[]{new ParseFileResolver(null, this),
+                                                   new ImageResolver[]{new ParseFileResolver(null, this),
                                                        new ParseFileResolver(null, this),
                                                        new ParseFileResolver(null, this)}, null, null, null, null, null,
                                                    INITIAL_ANONYMUS_CHECKED_STATE, false, 0));

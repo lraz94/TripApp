@@ -3,10 +3,12 @@ package com.source.tripwithme.main_ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -26,31 +28,32 @@ import com.source.tripwithme.images_resolve.BitmapsToViews;
 import com.source.tripwithme.images_resolve.DummyProgressCallback;
 import com.source.tripwithme.visible_data.PersonVisibleData;
 
-import java.io.IOException;
-
 public class UsersManagerUI {
 
     private static final int FORGOT_PASS_STATE = 1;
     private static final int REGULAR_LOGIN = 2;
     private static final int PRIMARY_PHOTO_INDEX = -1;
+    private static final float MAX_HEIGHT_NEEDED_FOR_PIC = 100;
+    private static final float MAX_WIDTH_NEEDED_FOR_PIC = 100;
     private static ImageView lastRequstedImageView;
     private static boolean[] selectedImages;
     private static int lastImageIndex;
     private static boolean primarySelected;
+    private static Handler photoRequestHandler;
 
     public static void showUpdateSignupDialog(final Context context, final ParseUtil parseUtil,
                                               final Handler photoRequestHandler, final PersonVisibleData me,
                                               final boolean asMust) {
+        UsersManagerUI.photoRequestHandler = photoRequestHandler;
         new AsyncTaskResolver(context, new PostExecuter() {
             @Override
             public void postExecute() {
-                showDialog(context, parseUtil, photoRequestHandler, me, asMust);
+                showDialog(context, parseUtil, me, asMust);
             }
         }, me).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private static void showDialog(Context context, ParseUtil parseUtil, Handler photoRequestHandler,
-                                   PersonVisibleData me, boolean asMust) {
+    private static void showDialog(Context context, ParseUtil parseUtil, PersonVisibleData me, boolean asMust) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(layout.update);
         EditText usernameEdit = (EditText)dialog.findViewById(id.usernameedit);
@@ -64,7 +67,7 @@ public class UsersManagerUI {
                         imageViews, primaryImage);
         setLoginButton(context, parseUtil, me, dialog);
         setLoginWithFacebookButton(context, parseUtil, me, dialog);
-        setImageViews(photoRequestHandler, imageViews, primaryImage);
+        setImageViews(imageViews, primaryImage);
         if (!asMust) {
             dialog.setTitle("Your Account");
         } else {
@@ -110,8 +113,7 @@ public class UsersManagerUI {
         }
     }
 
-    private static void setImageViews(final Handler photoRequestHandler, ImageView[] imageViews,
-                                      ImageView primaryImage) {
+    private static void setImageViews(ImageView[] imageViews, ImageView primaryImage) {
         selectedImages = new boolean[]{false, false, false};
         primarySelected = false;
         for (int i = 0; i < selectedImages.length; i++) {
@@ -263,18 +265,52 @@ public class UsersManagerUI {
         parseUtil.updatePicsAndMe(primary, bitmaps, me);
     }
 
-    public static void resultImageInUri(Context context, Uri uri) {
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+    public static void resultImageInUri(final Context context, final Uri uri) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = null; // null will return as an error
+                Message msg = new Message();
+                msg.what = TripWithMeMain.RESOLVE_TO_BITMAP_HANDLER;
+                try {
+                    // get it
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+                    // Resize to 100x100
+                    if (bitmap != null) {
+                        int width = bitmap.getWidth();
+                        int height = bitmap.getHeight();
+                        float scaleWidth = MAX_WIDTH_NEEDED_FOR_PIC / (float)width;
+                        float scaleHeight = MAX_HEIGHT_NEEDED_FOR_PIC / (float)height;
+                        // CREATE A MATRIX FOR THE MANIPULATION
+                        Matrix matrix = new Matrix();
+                        // RESIZE THE BIT MAP
+                        matrix.postScale(scaleWidth, scaleHeight);
+                        // "RECREATE" THE NEW BITMAP
+                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
+                        if (resizedBitmap != null) {
+                            bitmap = resizedBitmap;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e("ImageUri", "Exception while fetch or recreate", e);
+                }
+                msg.obj = bitmap;
+                photoRequestHandler.sendMessage(msg);
+            }
+        }).start();
+
+    }
+
+    public static void bitmapReceived(Context context, Bitmap bitmap) {
+        if (bitmap != null) {
             lastRequstedImageView.setImageBitmap(bitmap);
             if (lastImageIndex != PRIMARY_PHOTO_INDEX) {
                 selectedImages[lastImageIndex] = true;
             } else {
                 primarySelected = true;
             }
-        } catch (IOException e) {
-            Log.e("ImageUri", "IOException", e);
-            Toast.makeText(context, "Cannot update image for user", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Error while getting pic... :(", Toast.LENGTH_SHORT);
         }
     }
 
