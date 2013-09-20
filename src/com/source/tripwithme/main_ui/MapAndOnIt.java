@@ -52,7 +52,7 @@ import java.util.Map.Entry;
 public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMapClickListener, OnMarkerClickListener {
 
     private static final DecimalFormat DECIMAL_FORMAT_FIVE_POINT = new DecimalFormat("#.00000");
-    private static final float ZOOM_AMOUNT_PERSON = 16;
+    private static final float ZOOM_AMOUNT_PERSON = 12;
     private static final String MAP_TAG = "MapHandeling";
     private final ListWithListeners<PointWithID> interests;  // won't be notified on change
     private final GoogleMap map;
@@ -220,7 +220,8 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
     }
 
     public void animatePersonAndShowDialog(final PersonVisibleData person) {
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(person.address().getLatLng(), ZOOM_AMOUNT_PERSON));
+        LatLng latLng = person.address().getLatLng();
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_AMOUNT_PERSON));
         person.paintActivePopup(activityWithResources, me);
     }
 

@@ -447,20 +447,26 @@ public class ParseUtil {
         }
     }
 
+    // synchronized and exception treated due on stop / on start
     public synchronized void updateOnlineStateUserAndMe(boolean online, PersonVisibleData me) {
-        if (me != null) {
-            me.setCheckedIn(online);
-        }
-        // me is updated - send it to server
-        setStateNoSave(me);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Log.e(PARSE_SAVE_TAG, "Error while save update online state", e);
-
+        try {
+            if (me != null) {
+                me.setCheckedIn(online);
             }
-        });
-        Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
+            // me is updated - send it to server
+            setStateNoSave(me);
+            currentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(PARSE_SAVE_TAG, "Error while save update online state", e);
+                    }
+                }
+            });
+            Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
+        } catch (Exception e1) {
+            Log.e(PARSE_SAVE_TAG, "Error while update online state", e1);
+        }
     }
 
     public boolean isSignedUp() {
@@ -548,6 +554,11 @@ public class ParseUtil {
                         showErrorInAccountDialog(e, true);
                     } else {
                         currentUser = user;
+                        try {
+                            currentUser.saveInBackground();
+                        } catch (Exception e1) {
+                            Log.e(PARSE_SAVE_TAG, "can't save after creation", e1);
+                        }
                         actualGetInitialDetails(callback, signUpState);
                     }
                 }

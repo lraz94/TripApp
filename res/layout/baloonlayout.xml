@@ -64,7 +64,7 @@
                     android:layout_height="fill_parent">
 
                     <ImageView
-                        android:id="@+id/img3"
+                        android:id="@+id/img1"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:contentDescription="@string/imageuser"
@@ -83,13 +83,14 @@
                         android:layout_gravity="center" />
 
                     <ImageView
-                        android:id="@+id/img1"
+                        android:id="@+id/img3"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:contentDescription="@string/imageuser"
                         android:scaleType="fitXY"
                         android:src="@drawable/pictures"
                         android:layout_marginRight="10dp" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
