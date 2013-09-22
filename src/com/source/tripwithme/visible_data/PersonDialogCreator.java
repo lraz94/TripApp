@@ -99,10 +99,16 @@ public class PersonDialogCreator {
         String addings = "";
         if (personVisibleData.isCheckedIn()) {
             if (!forUser.isCheckedIn()) {
-                addings = " - check in to chat! :)";
+                addings = " - check in to chat!";
+            } else {
+                addings = " - you can now chat! :)";
             }
         } else {
-            addings = " - unavailable for chat :(";
+            if (!forUser.isCheckedIn()) {
+                addings = " - check in to leave a message! :)";
+            } else {
+                addings = " - unavailable for chat - leave a message!";
+            }
         }
         SpannableString content = new SpannableString("Status: " + statusStr + addings);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -133,7 +139,7 @@ public class PersonDialogCreator {
             }
         });
         final Button buttonIm = (Button)dialog.findViewById(id.clickImButton);
-        if (!personVisibleData.isCheckedIn() || !forUser.isCheckedIn()) {
+        if (!forUser.isCheckedIn()) {
             buttonIm.setEnabled(false);
         }
         buttonIm.setOnClickListener(new OnClickListener() {

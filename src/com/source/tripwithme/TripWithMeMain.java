@@ -240,7 +240,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
                 refershLocation = true;
                 boolean tryUpdate = updateByLocationIfCan();
                 if (!tryUpdate) {
-                    Toast.makeText(TripWithMeMain.this, "Can't refresh location - already in the middle!",
+                    Toast.makeText(TripWithMeMain.this, "Can't update location - please wait and try again!",
                                    Toast.LENGTH_SHORT).show();
                 }
             }

@@ -11,12 +11,6 @@ public class PointWithDistance {
     private double distance;
 
 
-    public PointWithDistance(double lat, double longi, double distance) {
-        this.latLng = new LatLng(lat, longi);
-        this.parseGeoPoint = new ParseGeoPoint(lat, longi);
-        this.distance = distance;
-    }
-
     public PointWithDistance(ParseGeoPoint parseGeoPoint, double distance) {
         double lat = parseGeoPoint.getLatitude();
         double longi = parseGeoPoint.getLongitude();

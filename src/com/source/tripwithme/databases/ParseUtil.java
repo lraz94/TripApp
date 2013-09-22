@@ -72,6 +72,7 @@ public class ParseUtil {
     private ParseUser currentUser;
     private TreeSet<String> friends;
     private int requestNumber;
+    private boolean lastStateForRecover;
 
     public static ParseUtil instance(Activity activity, CountryFactory countryFactory) {
         if (instance == null) {
@@ -176,15 +177,52 @@ public class ParseUtil {
     public void loginAndUpdateMe(final String username, String password, final PersonVisibleData me,
                                  final ActionDoneCallback callback) {
         final boolean isAnonymus = deleteAnonymusAndLogOut();
+        // save current state for restore
+        rememberStateTurnChceckedOut(me, isAnonymus);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 boolean result = loginParseDone(parseUser, e, me, username, callback);
-                if (!result && isAnonymus) {
-                    loginAnonymus();
+                if (!result) {
+                    restoreAfterFailure(isAnonymus, me);
                 }
             }
         });
+    }
+
+    private void restoreAfterFailure(boolean anonymus, PersonVisibleData me) {
+        if (anonymus) {
+            // no need to restore
+            loginAnonymus();
+        } else {
+            // failure with regular user
+            restoreLastState(me);
+        }
+    }
+
+    private void restoreLastState(PersonVisibleData me) {
+        if (me != null) {
+            if (lastStateForRecover) {
+                me.setCheckedIn(true);
+                setStateNoSave(me);
+                Log.d(PARSE_SAVE_TAG, "Saving in restore state");
+                currentUser.saveInBackground();
+            }
+        }
+    }
+
+    private void rememberStateTurnChceckedOut(PersonVisibleData me, boolean isAnonymus) {
+        if (me != null && me.isCheckedIn()) {
+            lastStateForRecover = true;
+            me.setCheckedIn(false);
+            if (!isAnonymus) {
+                setStateNoSave(me);
+                Log.d(PARSE_SAVE_TAG, "Saving in remember state");
+                currentUser.saveInBackground();
+            }
+        } else {
+            lastStateForRecover = false;
+        }
     }
 
     private void loginAnonymus() {
@@ -212,14 +250,15 @@ public class ParseUtil {
             currentUser = parseUser;
             // update online state + location according to current state in app
             if (me != null) {
+                restoreLastState(me); // new user default state is false... restore is only for true
                 setLocationNoSave(me);
-                setStateNoSave(me);
                 Log.d(PARSE_SAVE_TAG, "parse Saving in background at login in");
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Log.e(PARSE_SAVE_TAG, "Error while save in login done update", e);
-
+                        if (e != null) {
+                            Log.e(PARSE_SAVE_TAG, "Error while save in login done update", e);
+                        }
                     }
                 });
             }
@@ -252,30 +291,30 @@ public class ParseUtil {
 
     public void loginWithFacebook(final PersonVisibleData me, final ActionDoneCallback callback) {
         try {
+            final boolean isAnonymus = deleteAnonymusAndLogOut();
+            rememberStateTurnChceckedOut(me, isAnonymus);
             ParseFacebookUtils.logIn(Arrays.asList(getPermissions()),
                                      activity, TripWithMeMain.REQUEST_CODE_FACEBOOK, new LogInCallback() {
                 @Override
                 public void done(ParseUser user, ParseException err) {
                     if (user == null) {
-                        Log.d(FACEBOOK_TAG, "Uh oh. The user cancelled the Facebook login.");
+                        Log.e(FACEBOOK_TAG, "User cancelled the Facebook login, or error.", err);
                         Toast.makeText(activity,
                                        "Facebook app isn't installed, or youv'e canceled Login. Fix and Retry.",
                                        Toast.LENGTH_SHORT).show();
+                        restoreAfterFailure(isAnonymus, me);
                     } else {
                         if (user.isNew()) {
                             Log.d(FACEBOOK_TAG, "User signed up and logged in through Facebook!");
                         } else {
                             Log.d(FACEBOOK_TAG, "User logged in through Facebook!");
                         }
-                        boolean isAnonymus = deleteAnonymusAndLogOut();
                         boolean loginResult = loginParseDone(user, err, me, "facebook user", callback); // temp username
-                        if (loginResult) {
+                        if (loginResult) {  // success
                             user.put(IS_IN_FACEBOOK_KEY, true);
                             fixCredentialsSave(user, me);
                         } else {
-                            if (isAnonymus) {
-                                loginAnonymus();
-                            }
+                            restoreAfterFailure(isAnonymus, me);
                         }
                     }
                 }
@@ -295,7 +334,9 @@ public class ParseUtil {
                                 parseUser.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
-                                        Log.e(PARSE_SAVE_TAG, "Error while save facebook log in", e);
+                                        if (e != null) {
+                                            Log.e(PARSE_SAVE_TAG, "Error while save facebook log in", e);
+                                        }
                                     }
                                 });
                             } else {
@@ -315,7 +356,7 @@ public class ParseUtil {
 
 
     private void setLocationNoSave(PersonVisibleData me) {
-        if (me != null) {
+        if (me != null && me.isCheckedIn()) {
             PointWithDistance address = me.address();
             if (address != null) {
                 Log.d(PARSE_SAVE_TAG, "parse setting address no save " + address);
@@ -330,7 +371,6 @@ public class ParseUtil {
     }
 
     private void setStateNoSave(PersonVisibleData me) {
-
         if (me != null) {
             boolean checkedin = me.isCheckedIn();
             currentUser.put(ONLINE_STATE_KEY, checkedin);
@@ -382,6 +422,9 @@ public class ParseUtil {
                                                          TappedCallback tapper, ParseUser user) {
         String name = user.getUsername();
         ParseGeoPoint position = user.getParseGeoPoint(PARSE_GEOPOINT_KEY);
+        if (position == null) {
+            position = new ParseGeoPoint(0, 0);
+        }
         Country country = null;
         String countryFromParse = user.getString(COUNTRY_ISO_KEY);
         if (countryFromParse != null) {
@@ -392,7 +435,7 @@ public class ParseUtil {
         }
         String email = user.getEmail();
         double distFromMe = 0;
-        if (position != null && parseGeoPositionCurrent != null) {
+        if (parseGeoPositionCurrent != null) {
             distFromMe = position.distanceInKilometersTo(parseGeoPositionCurrent);
         }
         boolean personOnline = user.getBoolean(ONLINE_STATE_KEY);
@@ -453,17 +496,22 @@ public class ParseUtil {
             if (me != null) {
                 me.setCheckedIn(online);
             }
-            // me is updated - send it to server
-            setStateNoSave(me);
-            currentUser.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Log.e(PARSE_SAVE_TAG, "Error while save update online state", e);
+            if (currentUser != null) { // delete anonymus state
+                // me is updated - send it to server
+                setStateNoSave(me);
+                setLocationNoSave(me); // added - when user checks in the server get's its location
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(PARSE_SAVE_TAG, "Error while save update online state", e);
+                        }
                     }
-                }
-            });
-            Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
+                });
+                Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
+            } else {
+                Log.d(PARSE_SAVE_TAG, "Delete anonymus state - no save to parse!");
+            }
         } catch (Exception e1) {
             Log.e(PARSE_SAVE_TAG, "Error while update online state", e1);
         }
@@ -626,6 +674,7 @@ public class ParseUtil {
                 }
             });
             ParseUser.logOut();
+            currentUser = null;
             return true;
         } else {
             return false;
