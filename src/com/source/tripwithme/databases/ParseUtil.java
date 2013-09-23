@@ -251,7 +251,7 @@ public class ParseUtil {
             // update online state + location according to current state in app
             if (me != null) {
                 restoreLastState(me); // new user default state is false... restore is only for true
-                setLocationNoSave(me);
+                setLocationNoSave(me); // after get state we update location !
                 Log.d(PARSE_SAVE_TAG, "parse Saving in background at login in");
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override

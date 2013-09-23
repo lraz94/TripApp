@@ -1,6 +1,7 @@
 package com.source.tripwithme.main_ui;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import com.parse.ParseGeoPoint;
 import com.source.tripwithme.R;
 import com.source.tripwithme.R.drawable;
 import com.source.tripwithme.R.id;
+import com.source.tripwithme.R.layout;
 import com.source.tripwithme.TripWithMeMain;
 import com.source.tripwithme.components.Country;
 import com.source.tripwithme.components.CountryFactory;
@@ -172,6 +174,16 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
                 isOnline = isChecked;
                 checkedInStateChanged(isChecked);
                 parseUtil.updateOnlineStateUserAndMe(isChecked, me);
+            }
+        });
+        Button helpButton = (Button)activityWithResources.findViewById(id.helpbutton);
+        helpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(activityWithResources);
+                dialog.setContentView(layout.helpscreen);
+                dialog.setTitle("Help Screen");
+                dialog.show();
             }
         });
 
