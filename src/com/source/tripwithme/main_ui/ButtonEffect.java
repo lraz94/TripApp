@@ -15,12 +15,13 @@ public class ButtonEffect {
         final Drawable backgroundDrawable = messageButton.getBackground();
         new AsyncTask<Void, Boolean, Void>() {
 
+            @SuppressWarnings("deprecation")
             @Override
             protected void onProgressUpdate(Boolean... values) {
                 if (values[0]) {
                     messageButton.setBackgroundColor(Color.YELLOW);
                 } else {
-                    messageButton.setBackground(backgroundDrawable);
+                    messageButton.setBackgroundDrawable(backgroundDrawable);
                 }
             }
 
