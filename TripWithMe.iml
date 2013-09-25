@@ -31,8 +31,18 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="google-play-services_lib" exported="" />
     <orderEntry type="module" module-name="facebook" exported="" />
+    <orderEntry type="module" module-name="google-play-services_lib1" exported="" />
+    <orderEntry type="module" module-name="gridlayout" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/android-sdk/extras/android/support/v7/gridlayout/libs/android-support-v7-gridlayout.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

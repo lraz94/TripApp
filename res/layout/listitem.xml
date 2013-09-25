@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@android:color/holo_blue_dark"
+            android:textColor="#4046ff"
             tools:ignore="SelectableText"
             android:paddingBottom="5dp" />
 
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="#0cff1c"
             tools:ignore="SelectableText"
             android:paddingBottom="5dp" />
 
