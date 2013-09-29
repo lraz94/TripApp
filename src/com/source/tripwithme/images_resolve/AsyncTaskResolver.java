@@ -43,9 +43,9 @@ public class AsyncTaskResolver extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        // TODO to resolve can be null after quiting app and returning?
+        // to resolve can be null after quiting app and returning?
         if (toResolve == null) {
-            return null; //?!
+            return null;
         }
         ProgressCallbackCreator creator = toResolve.preResolveAll(new ProgressCallback() {
             public void done(Integer percentDone) {
@@ -53,7 +53,7 @@ public class AsyncTaskResolver extends AsyncTask<Void, Integer, Void> {
             }
         });
         try {
-            // wait for progress to end TODO RISKY
+            // wait for progress to end - RISKY
             long startTime = System.currentTimeMillis();
             while (!creator.isDone() && !userRequestedDone) {
                 long current = System.currentTimeMillis();

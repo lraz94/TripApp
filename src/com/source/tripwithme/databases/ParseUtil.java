@@ -59,8 +59,9 @@ public class ParseUtil {
     private static final String PRIMARY_IMAGE_KEY = "PrimaryImage";
     private static final String USER_IMAGE_PREFIX = "userImage";
     private static final String IS_IN_FACEBOOK_KEY = "InFacebook";
+    private static final String SIGNED_UP_REGULAR = "SignedUpRegular";
     public static final int NUMBER_OF_SECONDARY_PHOTOS = 3;
-    private static final boolean INITIAL_ANONYMUS_CHECKED_STATE = false;
+    private static final boolean INITIAL_ANONYMOUS_CHECKED_STATE = false;
     private static final int SLEEP_BETWEEN_FINDINGS_EFFECT = 100;
     public static final String FACEBOOK_TAG = "FacebookTag";
 
@@ -104,7 +105,7 @@ public class ParseUtil {
 
         ParseAnalytics.trackAppOpened(activity.getIntent());
 
-        ParseFacebookUtils.initialize("211814822312783");   // TODO put app id
+        ParseFacebookUtils.initialize("211814822312783");
 
     }
 
@@ -151,8 +152,18 @@ public class ParseUtil {
                 @Override
                 public void done(ParseException e) {
                     if (e == null) {
-                        callback.done();
+                        currentUser.put(SIGNED_UP_REGULAR, true);
+                        Log.d(PARSE_SAVE_TAG, "save after signup");
+                        currentUser.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(PARSE_SAVE_TAG, "Can't save after signup regular", e);
+                                }
+                            }
+                        });
                         me.setUniqueChatID(currentUser.getObjectId());
+                        callback.done();
                     } else {
                         Log.e(PARSE_SAVE_TAG, "Sign up failed", e);
                         showErrorInAccountDialog(e, false);
@@ -161,12 +172,12 @@ public class ParseUtil {
                             @Override
                             public void done(ParseException e) {
                                 if (e != null) {
-                                    Log.e(PARSE_SAVE_TAG, "Error delete anonymus user", e);
+                                    Log.e(PARSE_SAVE_TAG, "Error delete anonymous user", e);
                                 }
                             }
                         });
                         ParseUser.logOut();
-                        loginAnonymus();
+                        loginAnonymous();
                     }
                 }
             });
@@ -176,24 +187,24 @@ public class ParseUtil {
 
     public void loginAndUpdateMe(final String username, String password, final PersonVisibleData me,
                                  final ActionDoneCallback callback) {
-        final boolean isAnonymus = deleteAnonymusAndLogOut();
+        final boolean notSignedup = deleteNotSignedUpAndLogOut();
         // save current state for restore
-        rememberStateTurnChceckedOut(me, isAnonymus);
+        rememberStateTurnChceckedOut(me, notSignedup);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 boolean result = loginParseDone(parseUser, e, me, username, callback);
                 if (!result) {
-                    restoreAfterFailure(isAnonymus, me);
+                    restoreAfterFailure(notSignedup, me);
                 }
             }
         });
     }
 
-    private void restoreAfterFailure(boolean anonymus, PersonVisibleData me) {
-        if (anonymus) {
+    private void restoreAfterFailure(boolean notSignedup, PersonVisibleData me) {
+        if (notSignedup) {
             // no need to restore
-            loginAnonymus();
+            loginAnonymous();
         } else {
             // failure with regular user
             restoreLastState(me);
@@ -211,29 +222,43 @@ public class ParseUtil {
         }
     }
 
-    private void rememberStateTurnChceckedOut(PersonVisibleData me, boolean isAnonymus) {
+    private void rememberStateTurnChceckedOut(PersonVisibleData me, boolean notSignedup) {
         if (me != null && me.isCheckedIn()) {
             lastStateForRecover = true;
             me.setCheckedIn(false);
-            if (!isAnonymus) {
+            if (!notSignedup) { // signed up
                 setStateNoSave(me);
                 Log.d(PARSE_SAVE_TAG, "Saving in remember state");
-                currentUser.saveInBackground();
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(PARSE_SAVE_TAG, "Can't save remebered state in manager", e);
+                        }
+                    }
+                });
             }
         } else {
             lastStateForRecover = false;
         }
     }
 
-    private void loginAnonymus() {
+    private void loginAnonymous() {
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
             public void done(final ParseUser parseUser, ParseException e) {
                 if (e == null) {
                     currentUser = parseUser;
-                    Toast.makeText(activity, "New anonymus identity was given to you", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "New anonymous identity was given to you", Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.d(PARSE_SAVE_TAG, "save login anonymous restored");
+                        currentUser.saveInBackground();
+                    } catch (Exception e1) {
+                        Log.e(PARSE_SAVE_TAG, "can't save after creation ,post failure", e1);
+                    }
                 } else {
-                    Log.e(PARSE_SAVE_TAG, "can't login anonymus in resotre", e);
+                    showErrorInAccountDialog(e, false);
+                    Log.e(PARSE_SAVE_TAG, "can't login anonymous in resotre", e);
                 }
             }
         });
@@ -291,8 +316,8 @@ public class ParseUtil {
 
     public void loginWithFacebook(final PersonVisibleData me, final ActionDoneCallback callback) {
         try {
-            final boolean isAnonymus = deleteAnonymusAndLogOut();
-            rememberStateTurnChceckedOut(me, isAnonymus);
+            final boolean notSignedup = deleteNotSignedUpAndLogOut();
+            rememberStateTurnChceckedOut(me, notSignedup);
             ParseFacebookUtils.logIn(Arrays.asList(getPermissions()),
                                      activity, TripWithMeMain.REQUEST_CODE_FACEBOOK, new LogInCallback() {
                 @Override
@@ -302,7 +327,7 @@ public class ParseUtil {
                         Toast.makeText(activity,
                                        "Facebook app isn't installed, or youv'e canceled Login. Fix and Retry.",
                                        Toast.LENGTH_SHORT).show();
-                        restoreAfterFailure(isAnonymus, me);
+                        restoreAfterFailure(notSignedup, me);
                     } else {
                         if (user.isNew()) {
                             Log.d(FACEBOOK_TAG, "User signed up and logged in through Facebook!");
@@ -314,7 +339,7 @@ public class ParseUtil {
                             user.put(IS_IN_FACEBOOK_KEY, true);
                             fixCredentialsSave(user, me);
                         } else {
-                            restoreAfterFailure(isAnonymus, me);
+                            restoreAfterFailure(notSignedup, me);
                         }
                     }
                 }
@@ -407,7 +432,7 @@ public class ParseUtil {
                     getPersonDataFromParseUser(parseGeoPositionCurrent, remover, tapper, user);
                 oneFoundCallback.found(personVisibleData);
 
-                // TODO effect ...
+                // effect ...
                 Thread.sleep(SLEEP_BETWEEN_FINDINGS_EFFECT);
             }
         } catch (ParseException e) {
@@ -496,7 +521,7 @@ public class ParseUtil {
             if (me != null) {
                 me.setCheckedIn(online);
             }
-            if (currentUser != null) { // delete anonymus state
+            if (currentUser != null) { // can be null while delete anonymous state
                 // me is updated - send it to server
                 setStateNoSave(me);
                 setLocationNoSave(me); // added - when user checks in the server get's its location
@@ -510,7 +535,7 @@ public class ParseUtil {
                 });
                 Log.d(PARSE_SAVE_TAG, "parse save after set in updateOnlineStateUserAndMe, new state: " + online);
             } else {
-                Log.d(PARSE_SAVE_TAG, "Delete anonymus state - no save to parse!");
+                Log.d(PARSE_SAVE_TAG, "Delete anonymous state - no save to parse!");
             }
         } catch (Exception e1) {
             Log.e(PARSE_SAVE_TAG, "Error while update online state", e1);
@@ -518,7 +543,8 @@ public class ParseUtil {
     }
 
     public boolean isSignedUp() {
-        return currentUser != null && !ParseAnonymousUtils.isLinked(currentUser);
+        return currentUser != null &&
+               (currentUser.getBoolean(SIGNED_UP_REGULAR) || currentUser.getBoolean(IS_IN_FACEBOOK_KEY));
     }
 
     public void requestPasswordResetShowToast(String emailForReset,
@@ -591,8 +617,8 @@ public class ParseUtil {
     public void getInitialDetailBackground(final DetailsFoundCallback callback) {
         // first we start the user
         currentUser = ParseUser.getCurrentUser();
-        final boolean signUpState = isSignedUp();
-        if (!signUpState) {
+        final boolean signedup = !deleteNotSignedUpAndLogOut(); // clean old damaged state
+        if (!signedup) {
             // details will return only after login
             ParseAnonymousUtils.logIn(new LogInCallback() {
                 @Override
@@ -603,22 +629,23 @@ public class ParseUtil {
                     } else {
                         currentUser = user;
                         try {
+                            Log.d(PARSE_SAVE_TAG, "save after login anonymous creation");
                             currentUser.saveInBackground();
                         } catch (Exception e1) {
                             Log.e(PARSE_SAVE_TAG, "can't save after creation", e1);
                         }
-                        actualGetInitialDetails(callback, signUpState);
+                        actualGetInitialDetails(callback, signedup);
                     }
                 }
             });
         } else { // return details now
-            actualGetInitialDetails(callback, signUpState);
+            actualGetInitialDetails(callback, signedup);
         }
     }
 
     // last real signup state
-    private void actualGetInitialDetails(final DetailsFoundCallback callback, boolean signUpState) {
-        if (signUpState) {
+    private void actualGetInitialDetails(final DetailsFoundCallback callback, boolean signedup) {
+        if (signedup) {
             new AsyncTask<Void, Void, PersonVisibleData>() {
                 @Override
                 protected void onPostExecute(PersonVisibleData personVisibleData) {
@@ -638,12 +665,12 @@ public class ParseUtil {
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            callback.details(new PersonVisibleData("Anonymus" + System.currentTimeMillis(), currentUser.getObjectId(),
+            callback.details(new PersonVisibleData("Anonymous" + System.currentTimeMillis(), currentUser.getObjectId(),
                                                    null, null, new ParseFileResolver(null, this),
                                                    new ImageResolver[]{new ParseFileResolver(null, this),
                                                        new ParseFileResolver(null, this),
                                                        new ParseFileResolver(null, this)}, null, null, null, null, null,
-                                                   INITIAL_ANONYMUS_CHECKED_STATE, false, 0));
+                                                   INITIAL_ANONYMOUS_CHECKED_STATE, false, 0));
         }
     }
 
@@ -662,19 +689,22 @@ public class ParseUtil {
     }
 
 
-    public boolean deleteAnonymusAndLogOut() {
-        if (currentUser != null && ParseAnonymousUtils.isLinked(currentUser)) {
-            currentUser.deleteInBackground(new DeleteCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Log.e(PARSE_SAVE_TAG, "Error delete anonymus user", e);
-                    }
+    public boolean deleteNotSignedUpAndLogOut() {
+        if (!isSignedUp()) {
+            if (currentUser != null) {
+                currentUser.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(PARSE_SAVE_TAG, "Error delete anonymous user", e);
+                        }
 
-                }
-            });
-            ParseUser.logOut();
-            currentUser = null;
+                    }
+                });
+                ParseUser.logOut();
+                Log.d(PARSE_SAVE_TAG, "Deleted not signed and logged out");
+                currentUser = null;
+            }
             return true;
         } else {
             return false;
@@ -700,8 +730,6 @@ public class ParseUtil {
                                 for (GraphUser user : users) {
                                     friends.add(getUsernameFromGraphUser(user));
                                 }
-                                // TODO temp print
-                                Log.d(FACEBOOK_TAG, "Friends list fetched: " + friends);
                             } else {
                                 Log.e(FACEBOOK_TAG, "Error returned by facebook while update friends list: " +
                                                     response.getError().getUserActionMessageId());
@@ -726,24 +754,4 @@ public class ParseUtil {
         return username;
     }
 
-    /*
-    // remove after finished adding to map
-    public void addNewUser(Country country) {
-        System.out.println("Adding user in: " + country);
-        String countryIsoName = country.name();
-        String countryFullName = country.getFullName();
-        ParseUser user = new ParseUser();
-        user.setUsername(countryFullName + " person");
-        user.setPassword(countryIsoName);
-        user.setEmail(countryIsoName + "@source.com");
-        user.put(PARSE_GEOPOINT_KEY, country.getGeoPoint());
-        user.put(COUNTRY_ISO_KEY, countryIsoName);
-        user.put(ONLINE_STATE_KEY, true);
-        try {
-            user.signUp();
-            ParseUser.logOut();
-        } catch (ParseException e) {
-        }
-    }
-    */
 }

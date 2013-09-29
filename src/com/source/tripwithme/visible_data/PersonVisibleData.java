@@ -52,7 +52,7 @@ public class PersonVisibleData extends BaseVisibleData implements Comparable<Per
     }
 
     public SocialNetwork[] getSocialNetworks() {
-        // TODO temp
+        // TODO temporary use of facebook only - next versions will also have more
         if (onUserFriendsList) {
             if (socialNetworks.length < 1) {
                 socialNetworks = new SocialNetwork[1];

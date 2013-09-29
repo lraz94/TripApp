@@ -25,7 +25,7 @@ public class ParseFileResolver implements ImageResolver {
 
 
     // if problem accour resolve won't do done with 100 and another protection from above is needed
-    // TODO still there is a problem when menu try to resolve and a click on person come in parallal
+    // still there is a problem when menu try to resolve and a click on person come in parallal
     @Override
     public void resolve(final ProgressCallback progressCallback, final BitmapGotCallback bitmapGotCallback) {
         if (!tried) {

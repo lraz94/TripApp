@@ -131,6 +131,9 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     // location
     private boolean refershLocation;
 
+    // people menu
+    private PeopleMenu peopleMenu;
+
     private double lastDistance;
 
     private boolean readyForNextLocationChange;
@@ -140,6 +143,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private LocationManager loationManager;
 
     private long lastSucceededChange;
+
 
 
     @Override
@@ -208,7 +212,7 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
     private void addPeopleMenuAdapter() {
         adapter = new UserItemAdapter(this, new ArrayList<PersonVisibleData>());
         people.addListListener(adapter.getNewListener(guiHandler));
-        new PeopleMenu(adapter, getString(string.selectPopoleStr)); // statically add adapater...
+        peopleMenu = new PeopleMenu(adapter, getString(string.selectPopoleStr));
     }
 
     private void showErrorInMapAndExit() {
@@ -310,13 +314,6 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             }
         };
     }
-
-    //private void addOneForEachCountryForDebug() {
-    //    List<Country> countriesList = countryFactory.getAllCountries();
-    //    for (Country c : countriesList) {
-    //        parseUtil.addNewPerson(c.getFullName() + " Person", c.getGeoPoint(), c);
-    //    }
-    //}
 
     private boolean currentLocationAsInterestPoint(Location currentLocation, long timeOfRequestMillis) {
         if (currentLocation != null) {
@@ -531,20 +528,9 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
         }
     }
 
-
-//public boolean onKeyDown(int keyCode, KeyEvent event) {
-//    if (_firstScreen == null) {
-//        return false;
-//    }
-//    if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-//        _firstScreen.dpadUp();
-//        return true;
-//    } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-//        _firstScreen.dpadDown();
-//        return true;
-//    }
-//    return (super.onKeyDown(keyCode, event));
-//}
+    public void openPeopleMenu() {
+        peopleMenu.showAsDialog(this);
+    }
 
 
     private class UpdateServerTask extends AsyncTask<Void, PersonVisibleData, Void> {
@@ -665,10 +651,10 @@ public class TripWithMeMain extends Activity implements ListenerOnCollection<Poi
             db.close();
         }
         // logout & delete user if anonymus
-        parseUtil.deleteAnonymusAndLogOut();
+        parseUtil.deleteNotSignedUpAndLogOut();
     }
 
-    // put user to last recorded state on start - TODO need to fill ready conditions...
+    // put user to last recorded state on start
     // first time lastState == null so no fear we are updating all new one
     @Override
     protected void onStart() {

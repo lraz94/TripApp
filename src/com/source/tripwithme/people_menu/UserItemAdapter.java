@@ -55,7 +55,7 @@ public class UserItemAdapter extends ArrayAdapter<PersonVisibleData> {
                         ProgressCallbackCreator creator = new ProgressCallbackCreator(new DummyProgressCallback(), 1);
                         person.resolvePrimaryPhoto(creator, new DummyBitmapCallback());
                         try {
-                            // wait for progress to end TODO RISKY
+                            // wait for progress to end - RISKY
                             while (!creator.isDone()) {
                                 Thread.sleep(SLEEP_TO_VALIDATE_END_MILIS);
                             }

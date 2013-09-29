@@ -249,7 +249,7 @@ public class UsersManagerUI {
     }
 
 
-    // TODO Do we need synchornize here?
+    // Do we need synchornize here?
     private static void updateDataAfterSignup(ImageView[] imageViews, PersonVisibleData me, ParseUtil parseUtil,
                                               ImageView primaryImage) {
         Bitmap[] bitmaps = new Bitmap[selectedImages.length];

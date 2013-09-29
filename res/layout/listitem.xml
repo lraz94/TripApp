@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/friendin"
-                android:textColor="#3c41ff"
+                android:textColor="#ff3a14"
                 android:textIsSelectable="false" />
 
             <ImageView

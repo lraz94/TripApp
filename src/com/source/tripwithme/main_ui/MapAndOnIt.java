@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -44,7 +43,6 @@ import com.source.tripwithme.components.ListenerOnCollection;
 import com.source.tripwithme.components.PointWithDistance;
 import com.source.tripwithme.components.PointWithID;
 import com.source.tripwithme.databases.ParseUtil;
-import com.source.tripwithme.people_menu.PeopleMenu;
 import com.source.tripwithme.visible_data.PersonVisibleData;
 
 import java.text.DecimalFormat;
@@ -147,8 +145,7 @@ public class MapAndOnIt implements ListenerOnCollection<PersonVisibleData>, OnMa
         Button secondscreenBtn = (Button)activityWithResources.findViewById(id.secondscreen);
         secondscreenBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(activityWithResources, PeopleMenu.class);
-                activityWithResources.startActivity(intent);
+                activityWithResources.openPeopleMenu();
             }
         });
         radarBtn = (Button)activityWithResources.findViewById(id.radar);
